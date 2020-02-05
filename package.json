@@ -1,0 +1,27 @@
+{
+  "name": "role-roulette",
+  "version": "1.0.0",
+  "description": "An application that assigns and distributes identities / roles to a group of players participating in a secret-role based game.",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd backend && npm start",
+    "client-build": "cd client && npm run-script build",
+    "build": "npm run-script client-build",
+    "client-test": "cd client && npm run-script test a",
+    "server-test": "cd backend && npm run-script test",
+    "test": "npm run-script server-test && npm run-script client-test ",
+    "start": "npm run-script build && npm run-script server",
+    "postinstall": "cd client && npm install && cd ../backend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chadxhillary/Role-Roulette.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chadxhillary/Role-Roulette/issues"
+  },
+  "homepage": "https://github.com/chadxhillary/Role-Roulette#readme"
+}
