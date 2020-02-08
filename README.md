@@ -4,6 +4,8 @@ An application that assigns and distributes identities / roles to a group of pla
 
 COMP 4350 Group Project — Winter 2020
 
+To access the production version of our application please visit: [http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com](http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com)
+
 ## Available Scripts
 
 ### `npm run build`
