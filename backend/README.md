@@ -51,6 +51,31 @@ node server.js
 If run locally go to `localhost:3000` browser to see the output.  
 If running on the ec2 instance go to `<PUBLIC_DNS>:3000` in browser to see the output.
 
+# Production Server
+
+## Refresh Production Build
+
+First ssh into the server as detailed above. Then `cd /var/www/Role-Roulette` to enter the project directory.
+
+Next, enter the command `sudo git pull` to get the latest changes that were pushed to the master branch.
+
+Now with the latest changes run `sudo npm install` in the root, backend, and client directories to update the dependencies. 
+Note: You must do each install individually, our scripts didn't seem to want to work on the EC2 instance.
+
+In the client directory you must now run `sudo npm run build` and with that the production server will be updated with our changes from master.
+
+The last portion is simply the running and management of the server which is done using pm2.
+At this point the server should still be running, but to go check on it, go to the backend directory and enter `pm2 list` to see the status of the server.
+
+Other helpful pm2 commands are:
+```
+pm2 start server.js
+pm2 restart server.js
+pm2 reload server.js
+pm2 stop server.js
+pm2 delete server.js
+```
+
 # Mongo Atlas DB information
 temporary admin account:
 User: admin
