@@ -1,0 +1,517 @@
+[{
+	"title":"Spyfall",
+	"description":"A spy in your ranks wants to figure out where you are while everyone else is trying to figure out who the spy is.",
+	"distribution-rules": false,
+	"roles":[
+		{
+			"name":"spy",
+			"role-description":"You are the Spy!",
+			"goal-description":"Figure out where you are and don't get caught!",
+			"extras":
+			{
+				"locations":[
+					"Airplane","Amusement Park",
+					"Bank",	"Beach",
+					"Carnival", "Casino",
+					"Circus Tent", "Corporate Party",
+					"Crusader Army","Day Spa",
+					"Embassy","Hospital",
+					"Hotel","Military Base",
+					"Movie Studio", "Nightclub",
+					"Ocean Liner", "Passenger Train",
+					"Pirate Ship", "Polar Station",
+					"Police Station", "Restaurant",
+					"School", "Service Station (Garage)",
+					"Space Station", "Submarine",
+					"Supermarket", "Theatre",
+					"University", "Zoo"
+				]
+
+			}
+		},
+		{
+			"name":"Airplane",
+			"role-description":"You are on an airplane",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Flight Engineer",
+					"Business Class Passenger",
+					"Copilot",
+					"Stowaway",
+					"Coach Passenger",
+				       	"Pilot",
+					"Flight Attendant"
+				]
+			}
+		},
+		{
+			"name":"Amusement Park",
+			"role-description":"You are at an Amusement Park",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Mechanic",
+					"Kid",
+					"Visitor",
+					"Vendor",
+					"Ride Operator",
+					"Clown",
+					"Tourist"
+				]
+			}
+		},
+		{
+			"name":"Submarine",
+			"role-description":"You are on a Submarine",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Sailor",
+					"Radio Operator",
+					"Cook",
+					"Sonar Operator",
+					"Commander",
+					"Navigator",
+					"Electrical Officer"
+				]
+			}
+		},
+		{
+			"name":"Hotel",
+			"role-description":"You are at a Hotel",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Housekeeper",
+					"Hotel Manager",
+					"Doorman",
+					"Security Guard",
+					"Guest",
+					"Receptionist",
+					"Bartender"
+				]
+			}
+		},
+		{
+			"name":"School",
+			"role-description":"You are at a School",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Principal",
+					"Vice Principal",
+					"Math Teacher",
+					"Student",
+					"Gym Teacher",
+					"Security Guard",
+					"Janitor"
+				]
+			}
+		},
+		{
+			"name":"Nightclub",
+			"role-description":"You are at a Nightclub",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Dancer",
+					"Pick-Up Artist",
+					"Bartender",
+					"DJ",
+					"Model",
+					"Regular",
+					"Bouncer"
+				]
+			}
+		},
+		{
+			"name":"Polar Station",
+			"role-description":"You are at the Polar Station",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Meteorologist",
+					"Radio Operator",
+					"Medic",
+					"Geoscientist",
+					"Hydrologist",
+					"Biologist",
+					"Expedition Leader"
+				]
+			}
+		},
+		{
+			"name":"Police Station",
+			"role-description":"You are at the Police Station",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Beat Cop",
+					"Criminal Lawyer",
+					"Lieutenant",
+					"Suspect",
+					"Journalist",
+					"Detective",
+					"Attorney"
+				]
+			}
+		},
+		{
+			"name":"Day Spa",
+			"role-description":"You are at a Day Spa",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Nail Specialist",
+					"Customer",
+					"Stylist",
+					"Massuer",
+					"Dermatologist",
+					"Beautician",
+					"Makeup Specialist"
+				]
+			}
+		},
+		{
+			"name":"Theatre",
+			"role-description":"You are at the Theatre",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Actor",
+					"Usher",
+					"Audience Member",
+					"Coatroom Attendant",
+					"Prompter",
+					"Stage Hand",
+					"Director"
+				]
+			}
+		},
+		{
+			"name":"Hospital",
+			"role-description":"You are at the Hospital",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Intern",
+					"Nurse",
+					"Patient",
+					"Head Physician",
+					"Physician",
+					"Surgeon",
+					"Pathologist"
+				]
+			}
+		},
+		{
+			"name":"Space Station",
+			"role-description":"You are on a Space Station",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Alien",
+					"Doctor",
+					"Space Tourist",
+					"Mission Commander",
+					"Pilot",
+					"Mechanical Engineer",
+					"Research Engineer"
+				]
+			}
+		},
+		{
+			"name":"Service Station (Garage)",
+			"role-description":"You are at a Service Station (Garage)",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Receptionist",
+					"Driver",
+					"Car Washer",
+					"Tire Service Technician",
+					"Biker",
+					"Electrical Technician",
+					"Manager"
+				]
+			}
+		},
+		{
+			"name":"Embassy",
+			"role-description":"You are at an Embassy",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Refugee",
+					"Bureaucrat",
+					"Secretary",
+					"Tourist",
+					"Security Guard",
+					"Ambassador",
+					"Diplomat"
+				]
+			}
+		},
+		{
+			"name":"Circus Tent",
+			"role-description":"You are in a Circus Tent",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Magician",
+					"Circus-Goer",
+					"Acrobat",
+					"Clown",
+					"Knife Thrower",
+					"Juggler",
+					"Animal Tamer"
+				]
+			}
+		},
+		{
+			"name":"Supermarket",
+			"role-description":"You are at the Supermarket",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Cashier",
+					"Security Guard",
+					"Butcher",
+					"Merchandiser",
+					"Delivery Person",
+					"Janitor",
+					"Customer"
+				]
+			}
+		},
+		{
+			"name":"Pirate Ship",
+			"role-description":"Ye be aboard a Pirate Ship",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Cook",
+					"Shackled Prisoner",
+					"Cabin Boy",
+					"Gunner",
+					"Seaman",
+					"Swashbuckling Captain",
+					"Slave"
+				]
+			}
+		},
+		{
+			"name":"Passenger Train",
+			"role-description":"You are aboard a Passenger Train",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Stoker",
+					"Conductor",
+					"Ticket Taker",
+					"Passenger Car Attendant",
+					"Vendor",
+					"Dining Car Cook",
+					"Passenger"
+				]
+			}
+		},
+		{
+			"name":"Beach",
+			"role-description":"You are at the Beach",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Lifeguard",
+					"Paraglider",
+					"Food Vendor",
+					"Photographer with Monkey",
+					"Entertainment Director",
+					"Vacationer",
+					"Thief"
+				]
+			}
+		},
+		{
+			"name":"Military Base",
+			"role-description":"You are at a Military Base",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Colonel",
+					"Non-Commissioned Officer",
+					"Sentry",
+					"Private",
+					"Medic",
+					"Sales Clerk",
+					"Deserter"
+				]
+			}
+		},
+		{
+			"name":"Zoo",
+			"role-description":"You are at the Zoo",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Visitor",
+					"Veterinarian",
+					"Caretaker",
+					"Guide",
+					"Vendor",
+					"Janitor",
+					"General Manager"
+				]
+			}
+		},
+		{
+			"name":"Carnival",
+			"role-description":"You are at a Carnival",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Vendor",
+					"Costumer",
+					"Roleplaying Game Fan",
+					"Reenactor",
+					"Tourist",
+					"Photographer",
+					"Reporter"
+				]
+			}
+		},
+		{
+			"name":"Bank",
+			"role-description":"You are in the Bank",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Consultant",
+					"Customer",
+					"Robber",
+					"Branch Manager",
+					"Armored Car Driver",
+					"Security Guard",
+					"Teller"
+				]
+			}
+		},
+		{
+			"name":"Casino",
+			"role-description":"You are at the Casino",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Gambler",
+					"Administrator",
+					"Bartender",
+					"Dealer",
+					"Cardsharp",
+					"Head of Security",
+					"Bouncer"
+				]
+			}
+		},
+		{
+			"name":"Crusader Army",
+			"role-description":"You are in a Crusader Army",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Knight",
+					"Archer",
+					"Squire",
+					"Bishop",
+					"Servant",
+					"Captive Saracen",
+					"Monk"
+				]
+			}
+		},
+		{
+			"name":"Movie Studio",
+			"role-description":"You are at a Movie Studio",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Extra",
+					"Stuntperson",
+					"Actor",
+					"Costume Designer",
+					"Director",
+					"Camera Operator",
+					"Sound Engineer"
+				]
+			}
+		},
+		{
+			"name":"Ocean Liner",
+			"role-description":"You are on an Ocean Liner",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Musician",
+					"Bartender",
+					"Wealthy Passenger",
+					"Radio Operator",
+					"Cook",
+					"Attendant",
+					"Captain"
+				]
+			}
+		},
+		{
+			"name":"Restaurant",
+			"role-description":"You are at a Restaurant",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Food Critic",
+					"Chef",
+					"Waiter",
+					"Busboy",
+					"Customer",
+					"Maitre d'",
+					"Musician"
+				]
+			}
+		},
+		{
+			"name":"Corporate Party",
+			"role-description":"You are at a Corporate Party",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Party Crasher",
+					"Courier",
+					"Emcee",
+					"Accountant",
+					"Manager",
+					"CEO",
+					"Administrative Assistant"
+				]
+			}
+		},
+		{
+			"name":"University",
+			"role-description":"You are at the University",
+			"goal-description":"Figure out who the spy is and don't give away where you are!",
+			"extras":{
+				"ids":[
+					"Professor",
+					"Dean",
+					"Graduate Student",
+					"Student",
+					"President",
+					"Campus Security",
+					"Researcher"
+				]
+			}
+		}
+	]
+}
+
+
+
+]
