@@ -53,6 +53,8 @@ If running on the ec2 instance go to `<PUBLIC_DNS>:3000` in browser to see the o
 
 # Production Server
 
+Production Server: [http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com](http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com)
+
 ## Refresh Production Build
 
 First ssh into the server as detailed above. Then `cd /var/www/Role-Roulette` to enter the project directory.
