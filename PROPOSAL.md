@@ -124,6 +124,3 @@ JavaScript and React components in both technologies.
 * Low Priority
     * As a Player I want to select my preferred identity before the start of a game
     * As a Player I want to be able to send my identity to another player
-
-## Data Model Diagram
-![Data Model Diagram](data-model-diagram.png "Data Model Diagram")
