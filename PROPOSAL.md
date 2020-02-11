@@ -126,4 +126,4 @@ JavaScript and React components in both technologies.
     * As a Player I want to be able to send my identity to another player
 
 ## Data Model Diagram
-![Data Model Diagram](data-modal-diagram.png "Data Model Diagram")
+![Data Model Diagram](data-model-diagram.png "Data Model Diagram")
