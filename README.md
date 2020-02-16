@@ -8,6 +8,8 @@ COMP 4350 Group Project — Winter 2020
 
 ---
 
+<br />
+
 ## Table Of Contents
 
   * [Production Server](#production-server)
@@ -33,11 +35,11 @@ COMP 4350 Group Project — Winter 2020
 
 ---
 
-
+<br />
 
 ## Production Server
 
-To access the production version of our application please visit: [http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com](http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com)
+To access the production version of our application please visit: [http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com](http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com)<br />
 
 ### Continuous Deployment
 
@@ -46,6 +48,8 @@ To access the production version of our application please visit: [http://ec2-3-
 ## Project Tracking
 
 [Trello board](https://trello.com/invite/b/gzInkoqT/2ce7f3b9a27756ef60ecd2c08d700e7f/4350-board-game)
+
+<br />
 
 ## Tech Stack
 
@@ -58,15 +62,21 @@ To access the production version of our application please visit: [http://ec2-3-
 * **Mobile Application**
   * React Native
 
+<br />
+
 ## Architecture and User Flow
 
 ### Data Model Diagram
 
-![data-model-diagram](C:\Users\jmulholl\Documents\4350\Role-Roulette\data-model-diagram.PNG)
+![data-model-diagram](/data-model-diagram.PNG)
 
 ### User Experience Architecture / Flow Diagram
 
-![ux-flow](C:\Users\jmulholl\Documents\4350\Role-Roulette\ux-flow.png)
+![ux-flow](/ux-flow.png)
+
+---
+
+<br />
 
 ## Setting up your dev environment
 
@@ -85,6 +95,8 @@ Install git, or GitHub desktop on your machine if you haven't already, and clone
 Open your terminal to the root folder (this folder) of the repository, and enter `npm install` to acquire all the project's dependencies.
 
 **Troubleshooting:** If the install failed, try entering the same command, `npm install` within both the `/backend` and `/client` repositories. 
+
+<br />
 
 ## Running the application locally
 
@@ -112,6 +124,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 Runs the client app. This allows dynamic updating<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+---
+
+<br />
+
 ## Continuous Integration
 
 `.github/workflows/nodejs.yml`
@@ -120,12 +136,16 @@ This Continuous integration action script will run checks on any active pull req
 
 This is a safeguard to ensure our `develop` and `master` branches are always in working order.
 
+<br />
+
 ## API Documentation
 
 `TODO`. For now;
 
 * See `/backend/models` for schema models.
 * See `/backend/routes` for the API methods, and the `const` variables in each route for the request arguments
+
+<br />
 
 ## Testing
 
@@ -136,6 +156,8 @@ Runs all test suites in both client and backend packages.<br />See `README.md` i
 **JEST** is our testing framework. See the JEST documentation on getting started [here](https://jestjs.io/docs/en/getting-started.html).
 
 The client tests are located at `/client/test`, and the server tests are located at `/backend/test`
+
+<br />
 
 ## Linter
 
@@ -151,9 +173,15 @@ See ESLint documentation [here](https://eslint.org/docs/user-guide/getting-start
 
 If you're using Visual Studio Code as your coding environment, you can install the `Prettier - Code Formatter` extension to auto-format your code according to the ESLint guidelines. [See here](https://prettier.io/docs/en/integrating-with-linters.html)
 
+<br />
+
 ---
 
+<br />
+
 # Programming Guidelines and Review Process
+
+<br />
 
 ## Programming  Guidelines
 
@@ -171,6 +199,8 @@ If you're using Visual Studio Code as your coding environment, you can install t
 
 - Try to make tests as you’re developing (or follow TDD)
 - Test all edge cases
+
+<br />
 
 ## Github Workflow
 
@@ -205,12 +235,20 @@ If you're using Visual Studio Code as your coding environment, you can install t
   - Using a merge conflict helper tool is recommended (ex. GitHub site/desktop)
   - Think through the merge conflicts. If you’re unsure, ask the person who wrote the conflicting lines, or post a message in slack for anyone to help
 
+<br />
+
+---
+
+<br />
+
 ## Review Process
 
 - Every pull request must be **approved** by 2 other members
 - A Review will involve looking in the `diff` for violations of the criteria below
 - Reviewers will run the project at that branch to verify everything works as intended
 - Reviewers will give feedback/suggestions on the pull requests, and **approve** them only when their feedback has been addressed/dismissed
+
+<br />
 
 ## Review Checklist
 
