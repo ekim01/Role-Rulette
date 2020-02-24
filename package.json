@@ -9,8 +9,10 @@
     "client-build": "cd client && npm run-script build",
     "build": "npm run-script client-build",
     "client-test": "cd client && npm run-script test a",
+    "client-test-ci": "cd client && npm run-script test -- a --coverage --updateSnapshot --CI=true",
     "server-test": "cd backend && npm run-script test",
     "test": "npm run-script server-test && npm run-script client-test ",
+    "test-ci": "npm run-script server-test && npm run-script client-test-ci",
     "start": "npm run-script build && npm run-script server",
     "postinstall": "cd client && npm install && cd ../backend && npm install"
   },

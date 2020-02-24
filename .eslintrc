@@ -1,12 +1,15 @@
 {
-    "extends": [
-      "react-app",
-      "plugin:node/recommended"
-    ],
-    "rules": {
-      "no-unused-vars":"warn",
-      "no-console":"off",
-      "func-names":"warn",
-      "no-process-exit": "off"
-    }
+  "extends": [
+    "react-app",
+    "plugin:node/recommended"
+  ],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "warn",
+    "no-process-exit": "off"
+  },
+  "env": {
+    "jest": true
   }
+}

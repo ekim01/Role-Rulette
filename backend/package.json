@@ -4,7 +4,7 @@
   "description": "The express backend of our React application.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "jest",
     "start": "node server.js"
   },
   "repository": {
@@ -17,10 +17,18 @@
     "url": "https://github.com/chadxhillary/Role-Roulette/issues"
   },
   "homepage": "https://github.com/chadxhillary/Role-Roulette#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "superagent": "^5.2.2",
+    "supertest": "^4.0.2"
   }
 }
