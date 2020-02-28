@@ -24,7 +24,7 @@ export default class Home extends Component {
     this.changeHandler(event);
   };
 
-  //sends a post request to add player to a room then navigates to lobby page
+  // Sends a post request to add player to a room then navigates to lobby page
   joinRoom = () => {
     let vm = this;
     axios
@@ -40,7 +40,7 @@ export default class Home extends Component {
           })
           .then(function (res) {
             console.log(res);
-            // response contains newly created player, res contains room they were added to
+            // Response contains newly created player, res contains room they were added to
             vm.props.history.push("/lobby", {
               room: res.data,
               user: response.data
@@ -70,7 +70,7 @@ export default class Home extends Component {
       });
   };
 
-  //sends a post request w/ username to /rooms/add then navigates to lobby page
+  // Sends a post request w/ username to /rooms/add then navigates to lobby page
   createRoom = () => {
     let vm = this;
     axios

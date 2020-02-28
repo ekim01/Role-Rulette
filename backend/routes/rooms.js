@@ -26,7 +26,7 @@ router.route('/add').post((req, res) => {
   let validCode = false;
 
   let username = req.body.username
-  // sets null username to empty string, to avoid db error
+  // Sets null username to empty string, to avoid db error
   if (!username) {
     username = ''
   }
@@ -48,19 +48,19 @@ router.route('/add').post((req, res) => {
         }
       }
     }
-    // create new player
+
     const newPlayer = new Player({
       name: req.body.username,
       host: true,
       role: null
     });
-    // save player to db
+
     newPlayer.save()
       .then(() => console.log("Player added"))
       .catch(err => console.log(err));
-    // default game for now (trimmed copy of spyfall)
+    // Default game for now (trimmed copy of spyfall)
     Game.findOne({ _id: "5e51d5031c9d440000648d19" }).populate('roles').then((game) => {
-      // Add new room with unique room code
+
       const newRoom = new Room({
         roomCode: newCode,
         players: [
@@ -72,7 +72,7 @@ router.route('/add').post((req, res) => {
         .then((room) => res.json(room))
         .catch(err => res.status(400).json('Error: ' + err));
 
-      console.log("added room: " + newCode);
+      console.log("Added room: " + newCode);
     }).catch((err) => {
       console.log(err);
     });
@@ -82,30 +82,29 @@ router.route('/add').post((req, res) => {
 
 });
 
-// Adds player to room
 router.route('/addPlayer').post((req, res, next) => {
   let username = req.body.username
-  // sets null username to empty string, to avoid db error
+  // Sets null username to empty string, to avoid db error
   if (!username) {
     username = 'Player'
   }
 
   Room.findOne({ roomCode: req.body.roomname }).then((room) => {
-    if (room) { //if room exists, add player to room
-      // create new player
+    if (room) { // If room exists, add player to room
+
       const newPlayer = new Player({
         name: username,
         host: false,
         role: null
       });
-      // save player to db
+
       newPlayer.save()
         .then(() => console.log("Player added"))
         .catch(err => {
           console.log("Player failed to add");
           next(err);
         });
-      // add player to room
+      // Add player to room
       Room.update({ _id: room._id },
         {
           $push: {
@@ -114,9 +113,9 @@ router.route('/addPlayer').post((req, res, next) => {
         }).then(() => res.json(newPlayer))
         .catch(err => next(err));
 
-      console.log("added player %s to room %s", req.body.username, req.body.roomname);
+      console.log("Added player %s to room %s", req.body.username, req.body.roomname);
     } else {
-      console.log("room %s not found", req.body.roomname);
+      console.log("Room %s not found", req.body.roomname);
       res.status(404);
       return res.send('Room code not found.');
     }

@@ -5,20 +5,20 @@
 // const app = require('../app-test')
 
 // afterAll(() => {
-//     mongoose.disconnect()
-//     console.log("MongoDB connection closed")
+//   mongoose.disconnect()
+//   console.log("MongoDB connection closed")
 // })
 
 // describe('Test the players path', () => {
-//     test('GET method should return json containing all players with correct object structure', () => {
-//         return request(app).get('/players').expect(200).expect('Content-Type', /json/).then(response => {
-//             for(player of response.body) {
-//                 expect(player.hasOwnProperty('name')).toBeTruthy();
-//                 expect(player.hasOwnProperty('host')).toBeTruthy();
-//                 expect(player.hasOwnProperty('role')).toBeTruthy();
-//             }
-//         });
+//   test('GET method should return json containing all players with correct object structure', () => {
+//     return request(app).get('/players').expect(200).expect('Content-Type', /json/).then(response => {
+//       for(player of response.body) {
+//         expect(player.hasOwnProperty('name')).toBeTruthy();
+//         expect(player.hasOwnProperty('host')).toBeTruthy();
+//         expect(player.hasOwnProperty('role')).toBeTruthy();
+//       }
 //     });
+//   });
 // })
 
 describe('Placeholder test until mocking is implemented', () => {

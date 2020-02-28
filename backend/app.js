@@ -9,10 +9,10 @@ const app = express();
 
 /* Middleware */
 app.use(cors());
-app.use(express.json()); // parse JSON, becasue we send and recieve
+app.use(express.json()); // Parse JSON, because we send and receive
 
 /* Database Init */
-const uri = process.env.ATLAS_URI; // From the MongoDB atlas dashboard
+const uri = process.env.ATLAS_URI; // From the MongoDB Atlas dashboard
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
 
 const connection = mongoose.connection;
@@ -33,7 +33,7 @@ app.use('/players', playersRouter);
 app.use(express.static('../client/build'));
 // Launches latest react build (from npm run build)
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
 });
 
-module.exports = app
+module.exports = app;
