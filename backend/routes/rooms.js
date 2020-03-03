@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
 const Constants = require("../../common/constants");
 let Room = require("../models/room.model");
 let Game = require("../models/game.model");
