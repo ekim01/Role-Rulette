@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`loadscreen.js LoadScreen component Matches the snapshot 1`] = `
+<div
+  className="overlay"
+>
+  <i
+    className="fa fa-refresh fa-spin"
+  />
+  <span>
+    <h1 />
+  </span>
+</div>
+`;
