@@ -13,7 +13,7 @@ app.use(express.json()); // Parse JSON, because we send and receive
 
 /* Database Init */
 const uri = process.env.ATLAS_URI; // From the MongoDB Atlas dashboard
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 
 const connection = mongoose.connection;
 connection.once('open', () => {

@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
-const ObjectId = require('mongoose').Types.ObjectId;
 let Player = require('../models/player.model');
 
 // Handles incoming HTTP GET requests on the /players URL path

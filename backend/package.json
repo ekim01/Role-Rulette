@@ -4,7 +4,7 @@
   "description": "The express backend of our React application.",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --runInBand",
     "start": "node server.js"
   },
   "repository": {
@@ -28,6 +28,8 @@
   },
   "devDependencies": {
     "jest": "^25.1.0",
+    "mockingoose": "^2.13.2",
+    "mongodb-memory-server": "^6.3.1",
     "superagent": "^5.2.2",
     "supertest": "^4.0.2"
   }

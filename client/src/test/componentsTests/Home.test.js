@@ -84,7 +84,7 @@ test(filename + ' changeHandler updates state', () => {
 // roomnameHandler
 // ------------------
 
-test(filename + ' roomChangeHadler calls changeHandler', () => {
+test(filename + ' roomChangeHandler calls changeHandler', () => {
     const wrapper = shallow(<Home />);
     const instance = wrapper.instance();
 
@@ -96,7 +96,7 @@ test(filename + ' roomChangeHadler calls changeHandler', () => {
     expect(FakeHandler).toHaveBeenCalled();
 });
 
-test(filename + ' roomChangeHadler changes characters to uppercase', () => {
+test(filename + ' roomChangeHandler changes characters to uppercase', () => {
     const wrapper = shallow(<Home />);
     const instance = wrapper.instance();
 

@@ -1,6 +1,4 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
-const ObjectId = require('mongoose').Types.ObjectId;
 let Room = require('../models/room.model');
 let Game = require('../models/game.model');
 let Player = require('../models/player.model');
@@ -26,9 +24,9 @@ router.route('/add').post((req, res) => {
   let validCode = false;
 
   let username = req.body.username
-  // Sets null username to empty string, to avoid db error
+  // Sets null username to default string, to avoid db error
   if (!username) {
-    username = ''
+    username = 'Player'
   }
 
   // Gets every room code currently in use
@@ -84,7 +82,7 @@ router.route('/add').post((req, res) => {
 
 router.route('/addPlayer').post((req, res, next) => {
   let username = req.body.username
-  // Sets null username to empty string, to avoid db error
+  // Sets null username to default string, to avoid db error
   if (!username) {
     username = 'Player'
   }
@@ -116,8 +114,7 @@ router.route('/addPlayer').post((req, res, next) => {
       console.log("Added player %s to room %s", req.body.username, req.body.roomname);
     } else {
       console.log("Room %s not found", req.body.roomname);
-      res.status(404);
-      return res.send('Room code not found.');
+      return res.status(404).json('Room code not found.');
     }
   }).catch((err) => {
     console.log(err);
