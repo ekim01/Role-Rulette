@@ -1,0 +1,8 @@
+:root {
+  --grey: #383b53;
+  --blue: #4f7cac;
+}
+
+input {
+  margin-top: 5px;
+}

@@ -1,0 +1,13 @@
+#login-box {
+  border-radius: 15px;
+  background-color: lightgray;
+  border: none;
+  margin: 0 Auto;
+  margin-top: 50px;
+}
+
+.btn {
+  margin-top: 10px;
+  background-color: var(--grey);
+  color: var(--blue);
+}
