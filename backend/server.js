@@ -42,8 +42,4 @@ app.get("*", (req, res) => {
 /* Server Start */
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> master

@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { ROOMCODE_LENGTH } from "./Utilities/constants";
 import Home from "./components/Home";
 import Lobby from "./components/Lobby";
-import Role from "./components/role";
 import axios from "axios";
 
 export default class App extends Component {

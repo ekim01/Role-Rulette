@@ -1,16 +1,14 @@
 const filename = "App.js";
 
 import React from "react";
-import { mount, EnzymeAdapter, shallow } from "enzyme";
+import { shallow } from "enzyme";
 import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create } from "react-test-renderer";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Lobby from "../components/Lobby";
+import { BrowserRouter as Router } from "react-router-dom";
 import Role from "../components/role";
 import Home from "../components/Home";
 import App from "../App";
-
 
 enzyme.configure({ adapter: new Adapter() });
 
@@ -18,7 +16,6 @@ test(filename + " errortext state initializes to null", () => {
   const wrapper = shallow(<App />);
   expect(wrapper.state("errortext")).toBe("");
 });
-
 
 test(filename + " updates roomname state", () => {
   const wrapper = shallow(<App />);
@@ -50,7 +47,6 @@ test(filename + " updates errortext state", () => {
   expect(wrapper.state("errortext")).toBe(newText);
 });
 
-
 describe(filename + " Router component", () => {
   test("Matches the snapshot", () => {
     const router = create(<Router />);
@@ -60,7 +56,9 @@ describe(filename + " Router component", () => {
 
 describe(filename + " Home component", () => {
   test("Matches the snapshot", () => {
-    const home = create(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
+    const home = create(
+      <Home joinRoom={() => {}} createRoom={() => {}} errortext={""} />
+    );
     expect(home.toJSON()).toMatchSnapshot();
   });
 });
@@ -76,7 +74,6 @@ describe(filename + " Role component", () => {
 // FUNCTIONS
 // ==================================
 
-
 test(filename + "setLoadingState sets errortext state to empty", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
@@ -87,7 +84,6 @@ test(filename + "setLoadingState sets errortext state to empty", () => {
   expect(wrapper.state("errortext").length).toBe(0);
 });
 
-
 test(filename + "setLoadingState sets loading state to true", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
@@ -97,33 +93,45 @@ test(filename + "setLoadingState sets loading state to true", () => {
   expect(wrapper.state("loading")).toEqual(true);
 });
 
-test(filename + "on joining, when roomname empty, errortext is /'Please complete all fields/'", () => {
-  const wrapper = shallow(<App />);
-  const instance = wrapper.instance();
+test(
+  filename +
+    "on joining, when roomname empty, errortext is /'Please complete all fields/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
 
-  const nameText = 'name';
-  const roomText = '';
-  instance.joinRoom( nameText, roomText);
-  expect(wrapper.state("errortext")).toBe("Please complete all fields");
-});
+    const nameText = "name";
+    const roomText = "";
+    instance.joinRoom(nameText, roomText);
+    expect(wrapper.state("errortext")).toBe("Please complete all fields");
+  }
+);
 
-test(filename + "on joining, when username empty errortext is /'Please complete all fields/'", () => {
-  const wrapper = shallow(<App />);
-  const instance = wrapper.instance();
+test(
+  filename +
+    "on joining, when username empty errortext is /'Please complete all fields/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
 
-  const nameText = "";
-  const roomText = "room";
-  instance.joinRoom( nameText, roomText);
-  expect(wrapper.state("errortext")).toEqual("Please complete all fields");
-});
+    const nameText = "";
+    const roomText = "room";
+    instance.joinRoom(nameText, roomText);
+    expect(wrapper.state("errortext")).toEqual("Please complete all fields");
+  }
+);
 
-test(filename + "on createroom, when username empty, errortext is /'Please complete all fields/'", () => {
-  const wrapper = shallow(<App />);
-  const instance = wrapper.instance();
-  const nameText = "";
-  instance.joinRoom( nameText);
-  expect(wrapper.state("errortext")).toEqual("Please complete all fields");
-});
+test(
+  filename +
+    "on createroom, when username empty, errortext is /'Please complete all fields/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+    const nameText = "";
+    instance.joinRoom(nameText);
+    expect(wrapper.state("errortext")).toEqual("Please complete all fields");
+  }
+);
 /*  #TODO - Lobby Component -- Unimplemented
 
 describe(filename + " Lobby component", () => {

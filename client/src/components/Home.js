@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { restrictInputAlphanumeric } from "../Utilities/common";
 import { PLAYERNAME_MAXLENGTH, ROOMCODE_LENGTH } from "../Utilities/constants";
 import LoadingScreen from "../components/presentation/loadscreen";
-import { Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Banner from "../Banner.png";
 import "../stylesheets/common.css";
@@ -43,7 +41,7 @@ export default class Home extends Component {
       <div>
         {this.props.loading && <LoadingScreen text="Loading..." />}
         <div>
-          <img src={Banner} />
+          <img src={Banner} alt="Role Roulette" />
         </div>
         <div className="container-fluid">
           <div className="col-lg-6 col-md-6 col-sm-8 col-xs-8" id="login-box">
