@@ -6,7 +6,7 @@ import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import { create } from "react-test-renderer";
 import { BrowserRouter as Router } from "react-router-dom";
-import Role from "../components/role";
+import Role from "../components/Role";
 import Home from "../components/Home";
 import App from "../App";
 
