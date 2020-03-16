@@ -6,7 +6,6 @@ export default class Lobby extends Component {
     super(props);
   }
 
- 
   render() {
     return (
       <div className="container-fluid">
@@ -23,12 +22,10 @@ export default class Lobby extends Component {
             <React.Fragment>
               <ul className="list-group">
                 <li className="list-group-item list-group-item-primary">
-                 The Host is: {this.props.hostName}
+                  The Host is: {this.props.hostName}
                 </li>
                 {this.props.players.map(player => (
-    
                   <li className="list-group-item">{player.name}</li>
-                  
                 ))}
               </ul>
             </React.Fragment>

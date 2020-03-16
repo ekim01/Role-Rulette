@@ -91,6 +91,7 @@ export default class Home extends Component {
                 />
               </div>
               <button
+                id="join"
                 type="submit"
                 className="btn btn-lg btn-block"
                 onClick={this.props.joinRoom.bind(

@@ -22,8 +22,6 @@ export default class App extends Component {
     };
   }
 
-  // componentDidUpdate(){return console.log("Component did update")}
-
   setLoadingState = () => {
     this.setState({
       loading: true,
@@ -52,13 +50,11 @@ export default class App extends Component {
         username: username
       })
       .then(response => {
-        console.log(response);
         axios
           .get("/rooms/getByRoomCode", {
             params: { roomname: roomname }
           })
           .then(function(res) {
-            console.log(res);
             // Response contains newly created player, res contains room they were added to
             vm.setState({
               loading: false,
@@ -96,7 +92,6 @@ export default class App extends Component {
   };
 
   createRoom = username => {
-    console.log("I made it here\n");
     // Clear error messages and set loading to true
     this.setLoadingState();
 
@@ -105,11 +100,9 @@ export default class App extends Component {
       return;
     }
 
-    //let vm = this;
     axios
       .post("/rooms/add", { username: username })
       .then(response => {
-        console.log(response);
         // Only player is guaranteed to be the current user as room is newly created
         this.setState({
           loading: false,
@@ -141,7 +134,7 @@ export default class App extends Component {
           loading={this.state.loading}
         />
       );
-    } else if ((this.state.page = "Lobby")) {
+    } else if (this.state.page === "Lobby") {
       view = (
         <Lobby
           hostName={this.state.hostName}
@@ -150,6 +143,8 @@ export default class App extends Component {
           errortext={this.state.errortext}
         />
       );
+    } else {
+      view = <h2>An error has occured.</h2>;
     }
 
     return <div>{view}</div>;
