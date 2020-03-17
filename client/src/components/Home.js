@@ -5,7 +5,6 @@ import LoadingScreen from "../components/presentation/loadscreen";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Banner from "../Banner.png";
 import "../stylesheets/common.css";
-import "../stylesheets/Home.css";
 
 export default class Home extends Component {
   constructor(props) {
@@ -40,11 +39,11 @@ export default class Home extends Component {
     return (
       <div>
         {this.props.loading && <LoadingScreen text="Loading..." />}
-        <div>
-          <img src={Banner} alt="Role Roulette" />
+        <div class="text center">
+          <img className="img-fluid mx-auto d-block rounded" src={Banner} alt="Role Roulette" />
         </div>
         <div className="container-fluid">
-          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-8" id="login-box">
+          <div className="col-lg-6 col-md-6 col-sm-8 col-xs-8" id="container-box">
             <h4 className="error-text">{this.props.errortext}</h4>
             <div className="form-group row">
               <label

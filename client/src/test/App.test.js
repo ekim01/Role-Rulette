@@ -21,7 +21,7 @@ jest.mock("axios");
 
 test(filename + " user state initializes to null", () => {
   const wrapper = shallow(<App />);
-  expect(wrapper.state("user")).toBe("");
+  expect(wrapper.state("user")).toEqual({});
 });
 test(filename + " role state initializes to null", () => {
   const wrapper = shallow(<App />);
@@ -123,7 +123,7 @@ describe(filename + " Lobby component", () => {
   });
 });
 
-describe(filename + " Renders home component on home page state", () => {
+describe(filename + " Renders Home component on Home page state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
@@ -145,6 +145,18 @@ describe(filename + " Renders Lobby component on Lobby page state", () => {
 
   expect(result.type).toBe("div");
   expect(result.props.children.type).toBe(Lobby);
+});
+
+describe(filename + " Renders Role component on Role page state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ page: "Role" });
+
+  const result = instance.render();
+
+  expect(result.type).toBe("div");
+  expect(result.props.children.type).toBe(Role);
 });
 
 describe(filename + " Renders error message on no page state", () => {
@@ -398,7 +410,7 @@ test(filename + " Players is passed to Lobby component", () => {
 
 test(filename + " joinRoom sets state on success", async () => {
   const froomCode = "ABCD";
-  const fuser = "Me";
+  const fuser = "ME";
   const fHost = "host1name";
   const fplayers = [{ name: fHost }, { name: fuser }];
 
@@ -427,7 +439,7 @@ test(filename + " joinRoom sets state on success", async () => {
   expect(wrapper.state("roomName")).toBe(froomCode);
   expect(wrapper.state("hostName")).toBe(fHost);
   expect(wrapper.state("players")).toBe(fplayers);
-  expect(wrapper.state("user")).toBe(fuser);
+  expect(wrapper.state("user")).toEqual({ name: fuser });
   expect(wrapper.state("page")).toBe("Lobby");
   expect(wrapper.state("loading")).toBe(false);
 });
@@ -517,7 +529,7 @@ test(filename + " createRoom sets state on success", async () => {
   expect(wrapper.state("hostName")).toBe(fuser);
   expect(wrapper.state("players")).toBe(fplayers);
   expect(wrapper.state("role")).toBe(frole);
-  expect(wrapper.state("user")).toBe(fuser);
+  expect(wrapper.state("user")).toEqual({ name: fuser });
   expect(wrapper.state("page")).toBe("Lobby");
   expect(wrapper.state("loading")).toBe(false);
 });
@@ -535,4 +547,37 @@ test(filename + " createRoom sets state on failure", async () => {
 
   expect(wrapper.state("errortext")).toBe(etext);
   expect(wrapper.state("loading")).toBe(false);
+});
+
+test(filename + " pollRoom sets state on success", async () => {
+  const froomCode = "ABCD";
+  const fuser = "ME";
+  const fHost = "host1name";
+  const fplayers = [{ name: fHost }, { name: fuser }];
+  const froom = {
+    players: fplayers,
+    roomCode: froomCode,
+    user: {
+      name: fuser
+    }
+  };
+
+  axios.get.mockResolvedValue({
+    data: {
+      roomCode: froomCode,
+      players: fplayers,
+      user: {
+        name: fuser
+      }
+    }
+  });
+
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  await instance.pollRoom();  
+
+  expect(wrapper.state("room")).toEqual(froom);
+  expect(wrapper.state("players")).toBe(fplayers);
+  expect(wrapper.state("user")).toEqual({ name: fHost });
 });

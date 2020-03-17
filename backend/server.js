@@ -10,10 +10,10 @@ const port = process.env.PORT || 3000;
 
 /* Middleware */
 app.use(cors());
-app.use(express.json()); // parse JSON, becasue we send and recieve
+app.use(express.json()); // Parse JSON, because we send and recieve
 
 /* Database Init */
-const uri = process.env.ATLAS_URI; // From the MongoDB atlas dashboard
+const uri = process.env.ATLAS_URI; // From the MongoDB Atlas dashboard
 mongoose.connect(uri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -28,8 +28,10 @@ connection.once("open", () => {
 /* Sets router paths for API calls */
 // Loads router from other files
 const roomsRouter = require("./routes/rooms");
+const playersRouter = require("./routes/players");
 // Adds router as middleware
 app.use("/rooms", roomsRouter);
+app.use("/players", playersRouter);
 
 /* All other paths not used for API calls are used to display pages in our application */
 // Serves Static Assets in production

@@ -156,4 +156,61 @@ router.route("/addPlayer").post((req, res, next) => {
     });
 });
 
+// Role distribution route that directs to different methods to handle different game distributions
+router.route("/distributeRoles").put((req, res) => {
+  let room = req.body.room
+  if (room.game) {
+    // distribution rules only complete for spyfall so far
+    if (room.game.title == "Spyfall") {
+      return spyfallDistribution(room, res)
+    } else {
+      return res.status(404).json('Selected game does not have role distribution rules');
+    }
+  } else {
+    return res.status(400).json('No game selected');
+  }
+});
+
+spyfallDistribution = (room, res) => {
+  let players = room.players
+  let game = room.game
+  // ensures player count is correct to play game
+  if (players.length < Constants.SPYFALL_MINPLAYERS) {
+    return res.status(418).json('Require more players to start game');
+  } else if (players.length > Constants.SPYFALL_MAXPLAYERS) {
+    return res.status(418).json('Maximum amount of players surpassed');
+  } else {
+    if (game.locations) {
+      // selects random location from list of locations
+      let location = game.locations[Math.floor(Math.random() * game.locations.length)]
+      // selects all roles for the selected location
+      let roles = game.roles.filter(role => role.location == location)
+      // selects which player will be the spy
+      let spyIndex = Math.floor(Math.random() * players.length)
+      // set the role of each player in room
+      for (let i = 0; i < players.length; i++) {
+        let role = ""
+        let player = players[i]
+        if (i == spyIndex) {
+          role = game.roles.find(role => role.name == "Spy") // set one player to spy
+        } else {
+          let roleToAdd = roles.splice(Math.floor(Math.random() * roles.length), 1) // remove one role randomly to assign to player
+          role = roleToAdd[0] // splice returns an array, use the returned value to set role
+        }
+        Player.where({ _id: player._id }).update(
+          {
+            $set: {
+              role: role
+            }
+          }
+        )
+          .then(() => console.log("Player " + i + " role set"))
+          .catch(err => res.status(400).json("Error: " + err));
+      }
+      return res.json('Role Distribution Successful')
+    }
+    return res.status(404).json('Game location list not found');
+  }
+}
+
 module.exports = router;

@@ -1,0 +1,32 @@
+#gameTitle {
+    text-align: center;
+    margin-top: 50px;
+    color: var(--grey);
+}
+
+#roleContainer {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--grey);
+    border-style: double;
+    border-radius: 10px;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+#roleLabel, #roleInput {
+    font-size: 40px;
+}
+
+#roleInput { 
+    color: red;
+    border: none;
+    text-align: center;
+    background: transparent;
+}
+
+textarea.description {
+    vertical-align: top;
+    margin-bottom: 10px;
+    width: 350px;
+}

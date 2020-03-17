@@ -5,4 +5,32 @@
 
 input {
   margin-top: 5px;
+  margin-left: 10px;
+}
+
+input.fixed_width{
+  width: 100px;
+}
+
+label {
+  font-size: large;
+  font-weight: bolder;
+}
+
+label.fixed_width{
+  width: 120px;
+}
+
+#container-box {
+  border-radius: 15px;
+  background-color: lightgray;
+  border: none;
+  margin: 0 Auto;
+  margin-top: 50px;
+}
+
+.btn {
+  margin-top: 10px;
+  background-color: var(--grey);
+  color: var(--blue);
 }
