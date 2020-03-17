@@ -22,6 +22,18 @@ export default class App extends Component {
     };
   }
 
+  checkUsername(username) {
+    let errorMessage = "";
+
+    if (username === "")
+      errorMessage = "Please enter a name";
+    else if (username.replace(/\s/g, '').length === 0)
+      errorMessage = "The name can't be only spaces";
+
+    console.log(errorMessage);
+    return errorMessage;
+  }
+
   setLoadingState = () => {
     this.setState({
       loading: true,
@@ -34,11 +46,23 @@ export default class App extends Component {
     // Clear error messages and set loading to true
     this.setLoadingState();
 
-    // Check both room and name, return error text for both before returning
-    if (roomname.length < ROOMCODE_LENGTH || username === "") {
+    let usernameError = this.checkUsername(username);
+    if (roomname.length === 0) {
       this.setState({
         loading: false,
         errortext: "Please complete all fields"
+      });
+      return;
+    } else if (usernameError) {
+      this.setState({
+        loading: false,
+        errortext: usernameError
+      });
+      return;
+    } else if (roomname.length < ROOMCODE_LENGTH) {
+      this.setState({
+        loading: false,
+        errortext: "Invalid room code"
       });
       return;
     }
@@ -95,8 +119,12 @@ export default class App extends Component {
     // Clear error messages and set loading to true
     this.setLoadingState();
 
-    if (username === "") {
-      this.setState({ loading: false, errortext: "Please enter a username" });
+    let usernameError = this.checkUsername(username);
+    if (usernameError) {
+      this.setState({
+        loading: false,
+        errortext: usernameError
+      });
       return;
     }
 

@@ -184,6 +184,48 @@ test(filename + "setLoadingState sets loading state to true", () => {
 
 test(
   filename +
+    "on joining, when username and roomname empty, errortext is /'Please complete all fields/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+
+    const nameText = "";
+    const roomText = "";
+    instance.joinRoom(roomText, nameText);
+    expect(wrapper.state("errortext")).toBe("Please complete all fields");
+  }
+);
+
+test(
+  filename +
+    "on joining, when username empty, errortext is /'Please enter a name/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+
+    const nameText = "";
+    const roomText = "room";
+    instance.joinRoom(roomText, nameText);
+    expect(wrapper.state("errortext")).toEqual("Please enter a name");
+  }
+);
+
+test(
+  filename +
+    "on joining, when username has only spaces, errortext is /'The name can't be only spaces/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+
+    const nameText = "    ";
+    const roomText = "room";
+    instance.joinRoom(roomText, nameText);
+    expect(wrapper.state("errortext")).toEqual("The name can't be only spaces");
+  }
+);
+
+test(
+  filename +
     "on joining, when roomname empty, errortext is /'Please complete all fields/'",
   () => {
     const wrapper = shallow(<App />);
@@ -191,34 +233,48 @@ test(
 
     const nameText = "name";
     const roomText = "";
-    instance.joinRoom(nameText, roomText);
-    expect(wrapper.state("errortext")).toBe("Please complete all fields");
-  }
-);
-
-test(
-  filename +
-    "on joining, when username empty errortext is /'Please complete all fields/'",
-  () => {
-    const wrapper = shallow(<App />);
-    const instance = wrapper.instance();
-
-    const nameText = "";
-    const roomText = "room";
-    instance.joinRoom(nameText, roomText);
+    instance.joinRoom(roomText, nameText);
     expect(wrapper.state("errortext")).toEqual("Please complete all fields");
   }
 );
 
 test(
   filename +
-    "on createroom, when username empty, errortext is /'Please enter a username/'",
+    "on joining, when roomname not 4 characters, errortext is /'Invalid room code/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
+
+    const nameText = "name";
+    const roomText = "ro";
+    instance.joinRoom(roomText, nameText);
+    expect(wrapper.state("errortext")).toEqual("Invalid room code");
+  }
+);
+
+test(
+  filename +
+    "on createroom, when username empty, errortext is /'Please enter a name/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+
     const nameText = "";
     instance.createRoom(nameText);
-    expect(wrapper.state("errortext")).toEqual("Please enter a username");
+    expect(wrapper.state("errortext")).toEqual("Please enter a name");
+  }
+);
+
+test(
+  filename +
+    "on createroom, when username has only spaces, errortext is /'The name can't be only spaces/'",
+  () => {
+    const wrapper = shallow(<App />);
+    const instance = wrapper.instance();
+
+    const nameText = "    ";
+    instance.createRoom(nameText);
+    expect(wrapper.state("errortext")).toEqual("The name can't be only spaces");
   }
 );
 
