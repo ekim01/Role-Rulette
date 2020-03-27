@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { POLLING_TIME } from "../Utilities/constants";
+import { POLLING_TIME, SPYFALL_MINPLAYERS, SPYFALL_MAXPLAYERS } from "../Utilities/constants";
 import "../stylesheets/common.css";
 import "../stylesheets/Role.css";
+import axios from "axios";
+import EndScreen from './EndScreen';
+
 
 export default class Role extends Component {
 
@@ -21,10 +24,21 @@ export default class Role extends Component {
 
   pollRoom = () => {
     this.props.pollRoom().then(() => {
-      // role cleared, game has ended, return to lobby
-      if (!this.props.user.role) {
-        this.props.setPage("Lobby")
+      if (!this.props.room.gameInProgress) {
+        this.props.setPage("EndScreen")
       }
+    });
+  }
+
+  endGame = () => {
+    let vm = this
+    axios.put('/rooms/EndScreen', { room: this.props.room }).then(function (response) {
+      vm.props.setPage("EndScreen")
+    }).catch(function (error) {
+     
+        vm.props.setErrorText("Internal Server Error.")
+      
+      console.log(error);
     });
   }
 
@@ -34,13 +48,14 @@ export default class Role extends Component {
     let roleDesc = ""
     let goalDesc = ""
     let userName = ""
+    let host = false
     if (this.props.user) {
       userName = this.props.user.name
-      if (this.props.user.role) {
-        roleName = this.props.user.role.name
-        roleDesc = this.props.user.role.roleDescription
-        goalDesc = this.props.user.role.goalDescription
-      }
+      host = this.props.user.host
+      roleName = this.props.roleName
+      roleDesc = this.props.roleDesc
+      goalDesc = this.props.goalDesc
+      
     }
     return (
       <div>
@@ -74,14 +89,21 @@ export default class Role extends Component {
               <div>
                 <textarea className="description" id="goalDescription" readOnly value={goalDesc} />
               </div>
-              <button
-                type="submit"
-                className="btn btn-lg btn-block"
-                onClick={this.routeToLogin}
-              >
-                Leave
-              </button>
-            </div>
+            {/* Hides start game button for all players except host */}
+            {
+              (host) ?
+                <React.Fragment>
+                  <button
+                        type="submit"
+                        className="btn btn-lg btn-block"
+                        onClick={this.endGame}
+                      >
+                        End Game
+                </button>
+                </React.Fragment>
+                : null
+            }
+            </div>            
           </div>
         </div>
       </div>

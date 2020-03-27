@@ -187,6 +187,7 @@ test(
   filename + " startGame sets page on role distribution success",
   async () => {
     const mockPage = jest.fn((text) => (text))
+    const dumbFunc = jest.fn(() =>(''))
     const pagetext = "Role";
 
     axios.put.mockResolvedValue({
@@ -195,7 +196,7 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setPage={mockPage} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setPage={mockPage} resetRole={dumbFunc} players={[]} room={{}} errortext={""}/>);
     const instance = wrapper.instance();
 
     await instance.startGame();

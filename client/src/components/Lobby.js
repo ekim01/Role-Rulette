@@ -21,7 +21,7 @@ export default class Lobby extends Component {
   pollRoom = () => {
     this.props.pollRoom().then(() => {
       // role set, game has started, go to role page
-      if (this.props.user.role) {
+      if (this.props.user.role && this.props.room.gameInProgress) {
         this.props.setPage("Role")
       }
     });
@@ -30,6 +30,7 @@ export default class Lobby extends Component {
   startGame = () => {
     let vm = this
     axios.put('/rooms/distributeRoles', { room: this.props.room }).then(function (response) {
+      vm.props.resetRole()
       vm.props.setPage("Role")
     }).catch(function (error) {
       if (error.response) {

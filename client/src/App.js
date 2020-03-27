@@ -5,6 +5,7 @@ import { ROOMCODE_LENGTH } from "./Utilities/constants";
 import Home from "./components/Home";
 import Lobby from "./components/Lobby";
 import Role from "./components/Role";
+import EndScreen from "./components/EndScreen";
 import axios from "axios";
 
 export default class App extends Component {
@@ -13,7 +14,9 @@ export default class App extends Component {
     this.state = {
       room: {},
       user: {},
-      role: "",
+      roleName:"",
+      roleDesc:"",
+      goalDesc:"",
       players: [],
       roomName: "",
       hostName: "",
@@ -23,6 +26,7 @@ export default class App extends Component {
       page: "Home"
     };
   }
+
 
   checkUsername(username) {
     let errorMessage = "";
@@ -35,6 +39,14 @@ export default class App extends Component {
     console.log(errorMessage);
     return errorMessage;
   }
+
+  resetRole = () => {
+    this.setState({
+      roleName:"",
+      roleDesc:"",
+      goalDesc:""
+    });
+  };
 
   setLoadingState = () => {
     this.setState({
@@ -66,10 +78,20 @@ export default class App extends Component {
           room: response.data,
           players: response.data.players,
           user: response.data.players.find(player => player._id === this.state.user._id)
+          
         });
+        if(this.state.user && this.state.user.role){
+          this.setState({
+          roleName: this.state.user.role.name,
+          roleDesc: this.state.user.role.roleDescription,
+          goalDesc: this.state.user.role.goalDescription
+        });
+      }
       }).catch(function (error) {
         console.log(error);
       });
+
+      
 
   // Sends a post request to add player to a room then navigates to lobby page
   joinRoom = (roomname, username) => {
@@ -167,11 +189,11 @@ export default class App extends Component {
           loading: false,
           roomName: response.data.roomCode,
           hostName: response.data.players[0].name,
-          role: response.data.role,
-          players: response.data.players,
-          user: response.data.players[0],
-          page: "Lobby",
-          room: response.data
+          role:     response.data.role,
+          players:  response.data.players,
+          user:     response.data.players[0],
+          page:     "Lobby",
+          room:     response.data
         });
       })
       .catch(error => {
@@ -206,19 +228,33 @@ export default class App extends Component {
           setPage={this.setPage}
           pollRoom={this.pollRoom}
           setErrorText={this.setErrorText}
+          resetRole={this.resetRole}
         />
       );
     } else if (this.state.page === "Role") {
       view = (
         <Role
-          hostName={this.state.hostName}
+          hostName= {this.state.hostName}
+          roomName= {this.state.roomName}
+          players=  {this.state.players}
+          errortext={this.state.errortext}
+          room=     {this.state.room}
+          user=     {this.state.user}
+          setPage=  {this.setPage}
+          pollRoom= {this.pollRoom}
+          roleName= {this.state.roleName}
+          roleDesc= {this.state.roleDesc}
+          goalDesc= {this.state.goalDesc}
+          
+        />
+      );
+    } else if (this.state.page === "EndScreen") {
+      view = (
+        <EndScreen
           roomName={this.state.roomName}
           players={this.state.players}
           errortext={this.state.errortext}
-          room={this.state.room}
-          user={this.state.user}
           setPage={this.setPage}
-          pollRoom={this.pollRoom}
         />
       );
     } else {

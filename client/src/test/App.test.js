@@ -23,9 +23,9 @@ test(filename + " user state initializes to null", () => {
   const wrapper = shallow(<App />);
   expect(wrapper.state("user")).toEqual({});
 });
-test(filename + " role state initializes to null", () => {
+test(filename + " roleName initializes to null", () => {
   const wrapper = shallow(<App />);
-  expect(wrapper.state("role")).toBe("");
+  expect(wrapper.state("roleName")).toBe("");
 });
 test(filename + " players state initializes to null", () => {
   const wrapper = shallow(<App />);

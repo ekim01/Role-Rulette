@@ -12,6 +12,10 @@ const roomSchema = new Schema(
       minlength: [Constants.ROOMCODE_LENGTH, "code too short"],
       maxlength: [Constants.ROOMCODE_LENGTH, "code too long"]
     },
+    gameInProgress: {
+      type: Boolean,
+      required:true,
+    },
     players: [
       {
         type: Schema.Types.ObjectId,

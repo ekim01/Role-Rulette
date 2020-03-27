@@ -78,6 +78,7 @@ router.route("/add").post((req, res) => {
         .then(game => {
           const newRoom = new Room({
             roomCode: newCode,
+            gameInProgress: false,
             players: [newPlayer],
             game: game
           });
@@ -156,6 +157,22 @@ router.route("/addPlayer").post((req, res, next) => {
     });
 });
 
+// route that sets game state to end
+router.route("/EndScreen").put((req, res) => {
+  let roomID = req.body.room._id;
+  Room.where({ _id: roomID }).update(
+    {
+      $set: {
+        gameInProgress: false
+      }
+    }
+  )
+  .then(() => console.log("Game State set to \"false\" "))
+  .catch(err => res.status(400).json("Error: " + err));
+  return res.json('gameInProgress updated successfully')
+});
+
+
 // Role distribution route that directs to different methods to handle different game distributions
 router.route("/distributeRoles").put((req, res) => {
   let room = req.body.room
@@ -171,9 +188,12 @@ router.route("/distributeRoles").put((req, res) => {
   }
 });
 
+
+
 spyfallDistribution = (room, res) => {
   let players = room.players
   let game = room.game
+  let roomID = room._id
   // ensures player count is correct to play game
   if (players.length < Constants.SPYFALL_MINPLAYERS) {
     return res.status(418).json('Require more players to start game');
@@ -207,6 +227,15 @@ spyfallDistribution = (room, res) => {
           .then(() => console.log("Player " + i + " role set"))
           .catch(err => res.status(400).json("Error: " + err));
       }
+      Room.where({ _id: roomID }).update(
+        {
+          $set: {
+            gameInProgress: true
+          }
+        }
+      )
+      .then(() => console.log("gameInProgress set to \"true\" "))
+      .catch(err => res.status(400).json("Error: " + err));
       return res.json('Role Distribution Successful')
     }
     return res.status(404).json('Game location list not found');
