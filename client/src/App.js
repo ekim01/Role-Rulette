@@ -14,9 +14,9 @@ export default class App extends Component {
     this.state = {
       room: {},
       user: {},
-      roleName:"",
-      roleDesc:"",
-      goalDesc:"",
+      roleName: "",
+      roleDesc: "",
+      goalDesc: "",
       players: [],
       roomName: "",
       hostName: "",
@@ -26,7 +26,6 @@ export default class App extends Component {
       page: "Home"
     };
   }
-
 
   checkUsername(username) {
     let errorMessage = "";
@@ -40,20 +39,18 @@ export default class App extends Component {
     return errorMessage;
   }
 
-  resetRole = () => {
-    this.setState({
-      roleName:"",
-      roleDesc:"",
-      goalDesc:""
-    });
-  };
-
-  setLoadingState = () => {
+  setLoadingStart = () => {
     this.setState({
       loading: true,
       errortext: ""
     });
   };
+
+  setLoadingFinish = () => {
+    this.setState({
+      loading: false
+    });
+  }
 
   setErrorText = (text) => {
     this.setState({
@@ -64,6 +61,15 @@ export default class App extends Component {
   setPage = (page) => {
     this.setState({
       page: page
+    })
+  }
+
+  setGame = (game) => {
+    // updates nested game object in room, used for when host switches game
+    let room = this.state.room
+    room.game = game
+    this.setState({
+      room: room
     })
   }
 
@@ -78,25 +84,25 @@ export default class App extends Component {
           room: response.data,
           players: response.data.players,
           user: response.data.players.find(player => player._id === this.state.user._id)
-          
+
         });
-        if(this.state.user && this.state.user.role){
+        if (this.state.user && this.state.user.role) {
           this.setState({
-          roleName: this.state.user.role.name,
-          roleDesc: this.state.user.role.roleDescription,
-          goalDesc: this.state.user.role.goalDescription
-        });
-      }
+            roleName: this.state.user.role.name,
+            roleDesc: this.state.user.role.roleDescription,
+            goalDesc: this.state.user.role.goalDescription
+          });
+        }
       }).catch(function (error) {
         console.log(error);
       });
 
-      
+
 
   // Sends a post request to add player to a room then navigates to lobby page
   joinRoom = (roomname, username) => {
     // Clear error messages and set loading to true
-    this.setLoadingState();
+    this.setLoadingStart();
 
     let usernameError = this.checkUsername(username);
     if (roomname.length === 0) {
@@ -130,7 +136,7 @@ export default class App extends Component {
           .get("/rooms/getByRoomCode", {
             params: { roomname: roomname }
           })
-          .then(function(res) {
+          .then(function (res) {
             // Response contains newly created player, res contains room they were added to
             vm.setState({
               loading: false,
@@ -170,7 +176,7 @@ export default class App extends Component {
 
   createRoom = username => {
     // Clear error messages and set loading to true
-    this.setLoadingState();
+    this.setLoadingStart();
 
     let usernameError = this.checkUsername(username);
     if (usernameError) {
@@ -189,11 +195,11 @@ export default class App extends Component {
           loading: false,
           roomName: response.data.roomCode,
           hostName: response.data.players[0].name,
-          role:     response.data.role,
-          players:  response.data.players,
-          user:     response.data.players[0],
-          page:     "Lobby",
-          room:     response.data
+          role: response.data.role,
+          players: response.data.players,
+          user: response.data.players[0],
+          page: "Lobby",
+          room: response.data
         });
       })
       .catch(error => {
@@ -223,35 +229,39 @@ export default class App extends Component {
           roomName={this.state.roomName}
           players={this.state.players}
           errortext={this.state.errortext}
+          loading={this.state.loading}
           room={this.state.room}
           user={this.state.user}
           setPage={this.setPage}
           pollRoom={this.pollRoom}
           setErrorText={this.setErrorText}
-          resetRole={this.resetRole}
+          setLoadingFinish={this.setLoadingFinish}
+          setLoadingStart={this.setLoadingStart}
+          setGame={this.setGame}
         />
       );
     } else if (this.state.page === "Role") {
       view = (
         <Role
-          hostName= {this.state.hostName}
-          roomName= {this.state.roomName}
-          players=  {this.state.players}
+          hostName={this.state.hostName}
+          roomName={this.state.roomName}
+          players={this.state.players}
           errortext={this.state.errortext}
-          room=     {this.state.room}
-          user=     {this.state.user}
-          setPage=  {this.setPage}
-          pollRoom= {this.pollRoom}
-          roleName= {this.state.roleName}
-          roleDesc= {this.state.roleDesc}
-          goalDesc= {this.state.goalDesc}
-          
+          room={this.state.room}
+          user={this.state.user}
+          setPage={this.setPage}
+          pollRoom={this.pollRoom}
+          roleName={this.state.roleName}
+          roleDesc={this.state.roleDesc}
+          goalDesc={this.state.goalDesc}
+          setLoadingFinish={this.setLoadingFinish}
         />
       );
     } else if (this.state.page === "EndScreen") {
       view = (
         <EndScreen
           roomName={this.state.roomName}
+          room={this.state.room}
           players={this.state.players}
           errortext={this.state.errortext}
           setPage={this.setPage}

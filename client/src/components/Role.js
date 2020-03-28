@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { POLLING_TIME, SPYFALL_MINPLAYERS, SPYFALL_MAXPLAYERS } from "../Utilities/constants";
+import { POLLING_TIME } from "../Utilities/constants";
+import LoadingScreen from "../components/presentation/loadscreen";
 import "../stylesheets/common.css";
 import "../stylesheets/Role.css";
 import axios from "axios";
-import EndScreen from './EndScreen';
-
 
 export default class Role extends Component {
-
   constructor(props) {
     super(props);
   }
@@ -15,6 +13,8 @@ export default class Role extends Component {
   componentDidMount() {
     // checks the current room state every 3 seconds
     this.timer = setInterval(() => this.pollRoom(), POLLING_TIME);
+    // set loading to false when role page is correctly rendered
+    this.props.setLoadingFinish()
   }
 
   componentWillUnmount() {
@@ -35,31 +35,31 @@ export default class Role extends Component {
     axios.put('/rooms/EndScreen', { room: this.props.room }).then(function (response) {
       vm.props.setPage("EndScreen")
     }).catch(function (error) {
-     
         vm.props.setErrorText("Internal Server Error.")
-      
       console.log(error);
     });
   }
 
   render() {
-    // ensures no error of trying to access role and user properties when role or user is null
-    let roleName = ""
-    let roleDesc = ""
-    let goalDesc = ""
+    // ensures no error of trying to access user properties when user is null
     let userName = ""
+    let gameTitle = ""
     let host = false
     if (this.props.user) {
       userName = this.props.user.name
       host = this.props.user.host
-      roleName = this.props.roleName
-      roleDesc = this.props.roleDesc
-      goalDesc = this.props.goalDesc
-      
+    }
+    // sets game properties to display
+    if (this.props.room) {
+      if (this.props.room.game) {
+        gameTitle = this.props.room.game.title
+      }
     }
     return (
       <div>
-        <h1 id="gameTitle" className="text-center"> Current Game: SpyFall</h1>
+        {/* If roleName hasn't been set it means that host just distributed roles and the role is loading */}
+        {(this.props.loading || !this.props.roleName) && <LoadingScreen text="Loading..." />}
+        <h1 id="gameTitle" className="text-center"> Current Game: {gameTitle}</h1>
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-8 col-xs-10" id="container-box">
@@ -74,20 +74,20 @@ export default class Role extends Component {
               <div id="roleContainer">
                 <label id="roleLabel"> Your role:</label>
                 <div>
-                  <h2 id="roleInput">{roleName}</h2>
+                  <h2 id="roleInput">{this.props.roleName}</h2>
                 </div>
               </div>
               <div>
                 <label>Role Description</label>
               </div>
               <div>
-                <textarea className="description" id="roleDescription" readOnly value={roleDesc} />
+                <textarea className="description" id="roleDescription" readOnly value={this.props.roleDesc} />
               </div>
               <div>
                 <label>Goal Desciption</label>
               </div>
               <div>
-                <textarea className="description" id="goalDescription" readOnly value={goalDesc} />
+                <textarea className="description" id="goalDescription" readOnly value={this.props.goalDesc} />
               </div>
             {/* Hides start game button for all players except host */}
             {

@@ -84,7 +84,7 @@ test(filename + " playernameHandler calls changeHandler", () => {
   expect(FakeHandler).toHaveBeenCalled();
 });
 
-test(filename + " roomChangeHadler changes characters to uppercase", () => {
+test(filename + " roomChangeHandler changes characters to uppercase", () => {
   const wrapper = shallow(
     <Home joinRoom={() => {}} createRoom={() => {}} errortext={""} />
   );
@@ -103,7 +103,7 @@ test(filename + " roomChangeHadler changes characters to uppercase", () => {
  * RENDERING
  *************/
 
-describe(filename + " Renders loading screen on loading state", () => {
+test(filename + " Renders loading screen on loading state", () => {
   const wrapper = shallow(
     <Home
       joinRoom={() => {}}
@@ -122,7 +122,7 @@ describe(filename + " Renders loading screen on loading state", () => {
   );
 });
 
-describe(
+test(
   filename + " Doesen't render loading screen on not loading state",
   () => {
     const wrapper = shallow(

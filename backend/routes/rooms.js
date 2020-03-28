@@ -72,7 +72,7 @@ router.route("/add").post((req, res) => {
         .save()
         .then(() => console.log("Player added"))
         .catch(err => console.log(err));
-      // Default game for now (trimmed copy of spyfall)
+      // Default game is set as Spyfall
       Game.findOne({ _id: "5e51d5031c9d440000648d19" })
         .populate("roles")
         .then(game => {
@@ -157,6 +157,33 @@ router.route("/addPlayer").post((req, res, next) => {
     });
 });
 
+// Saves new game to room objects using the game's title
+router.route("/updateGame").put((req, res) => {
+  let room = req.body.room
+  Game.findOne({ title: req.body.gameTitle })
+    .populate("roles")
+    .then(game => {
+      // Update game in room
+      if (game) {
+        Room.update(
+          { _id: room._id },
+          {
+            $set: {
+              game: game
+            }
+          }
+        )
+          .then(() => res.json(game))
+          .catch(err => console.log(err));
+      } else {
+        return res.status(404).json('No game with selected title found');
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
 // route that sets game state to end
 router.route("/EndScreen").put((req, res) => {
   let roomID = req.body.room._id;
@@ -167,9 +194,8 @@ router.route("/EndScreen").put((req, res) => {
       }
     }
   )
-  .then(() => console.log("Game State set to \"false\" "))
-  .catch(err => res.status(400).json("Error: " + err));
-  return res.json('gameInProgress updated successfully')
+    .then(() => res.json('Game ended successfully.'))
+    .catch(err => res.status(400).json("Error: " + err));
 });
 
 
@@ -177,9 +203,12 @@ router.route("/EndScreen").put((req, res) => {
 router.route("/distributeRoles").put((req, res) => {
   let room = req.body.room
   if (room.game) {
-    // distribution rules only complete for spyfall so far
     if (room.game.title == "Spyfall") {
       return spyfallDistribution(room, res)
+    } else if (room.game.title == "Avalon") {
+      return avalonDistribution(room, res)
+    } else if (room.game.title == "Secret Dictator") {
+      return secretDictatorDistribution(room, res)
     } else {
       return res.status(404).json('Selected game does not have role distribution rules');
     }
@@ -187,8 +216,6 @@ router.route("/distributeRoles").put((req, res) => {
     return res.status(400).json('No game selected');
   }
 });
-
-
 
 spyfallDistribution = (room, res) => {
   let players = room.players
@@ -227,18 +254,121 @@ spyfallDistribution = (room, res) => {
           .then(() => console.log("Player " + i + " role set"))
           .catch(err => res.status(400).json("Error: " + err));
       }
-      Room.where({ _id: roomID }).update(
-        {
-          $set: {
-            gameInProgress: true
-          }
-        }
-      )
-      .then(() => console.log("gameInProgress set to \"true\" "))
-      .catch(err => res.status(400).json("Error: " + err));
+      // sets gameInProgess boolean to true
+      startGame(roomID)
       return res.json('Role Distribution Successful')
     }
     return res.status(404).json('Game location list not found');
+  }
+}
+
+avalonDistribution = (room, res) => {
+  let players = room.players
+  let game = room.game
+  let roomID = room._id
+  // ensures player count is correct to play game
+  if (players.length < Constants.AVALON_MINPLAYERS) {
+    return res.status(418).json('Require more players to start game');
+  } else if (players.length > Constants.AVALON_MAXPLAYERS) {
+    return res.status(418).json('Maximum amount of players surpassed');
+  } else {
+    if (game.distributionRules) {
+      // selects distribution rules based off of player number
+      let rules = game.distributionRules.find(rules => rules.playerNum === players.length)
+      if (rules) {
+        // Role Array will contain one Merlin, one Assassin, one Loyal Servant of Arthur and one Minion of Mordor
+        let roles = game.roles
+        let servant = game.roles.find(role => role.name == "Loyal Servant of Arthur")
+        let minion = game.roles.find(role => role.name == "Minion of Mordor")
+        // add correct amount of extra servants and minions to role array, amount provided via distribution rules
+        // keep in mind there are already 2 good and 2 bad roles in the array that are always present
+        for (let i = 2; i < rules.good; i++) {
+          roles.push(servant)
+        }
+        for (let i = 2; i < rules.bad; i++) {
+          roles.push(minion)
+        }
+        // sets the role of each player in the room
+        assignRoles(players, roles)
+        // sets gameInProgess boolean to true
+        startGame(roomID)
+        return res.json('Role Distribution Successful')
+      } else {
+        return res.status(404).json('Distribution Rules for current number of players not found');
+      }
+    }
+    return res.status(404).json('Distribution Rules list not found');
+  }
+}
+
+secretDictatorDistribution = (room, res) => {
+  let players = room.players
+  let game = room.game
+  let roomID = room._id
+  // ensures player count is correct to play game
+  if (players.length < Constants.DICTATOR_MINPLAYERS) {
+    return res.status(418).json('Require more players to start game');
+  } else if (players.length > Constants.DICTATOR_MAXPLAYERS) {
+    return res.status(418).json('Maximum amount of players surpassed');
+  } else {
+    if (game.distributionRules) {
+      // selects distribution rules based off of player number
+      let rules = game.distributionRules.find(rules => rules.playerNum === players.length)
+      if (rules) {
+        // Role Array will contain one Dictator, one Fascist and one Liberal
+        let roles = game.roles
+        let liberal = game.roles.find(role => role.name == "Liberal")
+        let fascist = game.roles.find(role => role.name == "Fascist")
+        // add correct amount of extra liberals and fascists to role array, amount provided via distribution rules
+        // keep in mind there are already 1 liberal and 2 fascist roles in the array that are always present
+        for (let i = 1; i < rules.liberal; i++) {
+          roles.push(liberal)
+        }
+        for (let i = 2; i < rules.fascist; i++) {
+          roles.push(fascist)
+        }
+        // sets the role of each player in the room
+        assignRoles(players, roles)
+        // sets gameInProgess boolean to true
+        startGame(roomID)
+        return res.json('Role Distribution Successful')
+      } else {
+        return res.status(404).json('Distribution Rules for current number of players not found');
+      }
+    }
+    return res.status(404).json('Distribution Rules list not found');
+  }
+}
+
+// helper method used to set gameInProgress to true
+startGame = (roomID) => {
+  Room.where({ _id: roomID }).update(
+    {
+      $set: {
+        gameInProgress: true
+      }
+    }
+  )
+    .then(() => console.log("Game started successfully"))
+    .catch(err => console.log("Error: " + err));
+}
+
+// helper method to assign roles for Avalon and Secret Dictator (Spyfall assigns roles differently)
+assignRoles = (players, roles) => {
+  for (let i = 0; i < players.length; i++) {
+    let role = ""
+    let player = players[i]
+    let roleToAdd = roles.splice(Math.floor(Math.random() * roles.length), 1) // remove one role randomly to assign to player
+    role = roleToAdd[0] // splice returns an array, use the returned value to set role
+    Player.where({ _id: player._id }).update(
+      {
+        $set: {
+          role: role
+        }
+      }
+    )
+      .then(() => console.log("Player " + i + " role set"))
+      .catch(err => res.status(400).json("Error: " + err));
   }
 }
 

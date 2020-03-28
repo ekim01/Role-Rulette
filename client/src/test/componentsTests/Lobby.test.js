@@ -2,96 +2,61 @@ import React from "react";
 import { mount, EnzymeAdapter, shallow } from "enzyme";
 import axios from "axios";
 import enzyme from "enzyme";
-import Home from "../../components/Home";
 import Lobby from "../../components/Lobby";
 import Adapter from "enzyme-adapter-react-16";
-import { SPYFALL_MINPLAYERS, SPYFALL_MAXPLAYERS } from "../../Utilities/constants";
+import LoadingScreen from "../../components/presentation/loadscreen";
 
-const filename = "Home.js";
+const filename = "Lobby.js";
 
 jest.mock("axios");
 enzyme.configure({ adapter: new Adapter() });
-
-// ===============
-// STATE
-// ===============
-
-test(filename + " roomname state initializes to null", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
-  expect(wrapper.state("roomname")).toBe("");
-});
-
-test(filename + " playername state initializes to null", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
-  expect(wrapper.state("username")).toBe("");
-});
-
-
 
 // ==================================
 // FUNCTIONS
 // ==================================
 
-
-// ------------------
-// changeHandler
-// ------------------
-
-test(filename + " changeHandler updates state", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} />);
-  const instance = wrapper.instance();
-
-  const newPlayer2 = "Player2";
-  const changeEvent = { target: { name: "playername", value: newPlayer2 } };
-  instance.changeHandler(changeEvent);
-
-  expect(wrapper.state("playername")).toBe(newPlayer2);
+test(filename + " invokes componentDidMount when mounted", () => {
+  const mount = jest.spyOn(Lobby.prototype, "componentDidMount");
+  shallow(<Lobby players={[]} room={{}} errortext={""} />);
+  expect(mount).toHaveBeenCalled();
 });
 
-// ------------------
-// roomnameHandler
-// -----------------d-
-
-test(filename + " roomChangeHadler calls changeHandler", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
-  const instance = wrapper.instance();
-
-  const FakeHandler = jest.spyOn(instance, "changeHandler");
-
-  const changeEvent = { target: { name: "roomname", value: "ABCD" } };
-  instance.roomnameHandler(changeEvent);
-
-  expect(FakeHandler).toHaveBeenCalled();
+test(filename + " invokes componentWillUnmount", () => {
+  const mount = jest.spyOn(Lobby.prototype, "componentWillUnmount");
+  const wrapper = shallow(<Lobby players={[]} room={{}} errortext={""} />);
+  wrapper.unmount();
+  expect(mount).toHaveBeenCalled();
 });
 
-// ------------------
-// playernameHandler
-// ------------------
-
-
-test(filename + " playernameHandler calls changeHandler", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
+test(filename + " pollRoom function call from componentDidMount", () => {
+  jest.useFakeTimers();
+  const mockPoll = jest.fn(() => { });
+  const wrapper = shallow(<Lobby pollRoom={mockPoll} players={[]} room={{}} errortext={""} />);
   const instance = wrapper.instance();
-
-  const FakeHandler = jest.spyOn(instance, "changeHandler");
-
-  const changeEvent = { target: { name: "username", value: "ABCDEFG" } };
-  instance.playernameHandler(changeEvent);
-
-  expect(FakeHandler).toHaveBeenCalled();
+  instance.pollRoom = mockPoll;
+  jest.advanceTimersByTime(6000);
+  expect(mockPoll).toHaveBeenCalled();
 });
 
-test(filename + " roomChangeHadler changes characters to uppercase", () => {
-  const wrapper = shallow(<Home joinRoom={()=>{}} createRoom={()=>{}} errortext={''} />);
+// ===============
+// TIMER CALLS
+// ===============
+
+test(filename + " setInterval() should be called on componentDidMount", () => {
+  jest.useFakeTimers();
+  const mockPoll = jest.fn(() => { });
+  const wrapper = shallow(<Lobby pollRoom={mockPoll} players={[]} room={{}} errortext={""} />);
   const instance = wrapper.instance();
+  instance.pollRoom = mockPoll;
+  jest.runOnlyPendingTimers();
+  expect(setInterval).toHaveBeenCalled();
+});
 
-  const newRoom = "azC1";
-
-  const changeEvent = { target: { name: "roomname", value: newRoom } };
-  instance.roomnameHandler(changeEvent);
-
-  expect(wrapper.state("roomname")).not.toBe(newRoom);
-  expect(wrapper.state("roomname")).toBe(newRoom.toUpperCase());
+test(filename + " clearInterval() should be called on componentWillUnmount", () => {
+  jest.useFakeTimers();
+  const wrapper = shallow(<Lobby players={[]} room={{}} errortext={""} />);
+  wrapper.unmount();
+  expect(clearInterval).toHaveBeenCalled();
 });
 
 // ------------------
@@ -102,7 +67,7 @@ test(
   filename + " startGame sets errortext on role distribution failure due to incorrect amount of players",
   async () => {
     const mockErrorText = jest.fn((text) => (text))
-    const etext = "Incorrect amount of players required to start game; please have " +  SPYFALL_MINPLAYERS + "-" + SPYFALL_MAXPLAYERS + " players.";
+    const etext = "Incorrect amount of players required to start game.";
 
     axios.put.mockRejectedValue({
       response: {
@@ -110,12 +75,12 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
-    
+
     // only one call made to mocked function and it will have our data
     expect(mockErrorText.mock.calls[0][0]).toBe(etext);
   }
@@ -133,12 +98,12 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
-    
+
     expect(mockErrorText.mock.calls[0][0]).toBe(etext);
   }
 );
@@ -155,12 +120,12 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
-    
+
     expect(mockErrorText.mock.calls[0][0]).toBe(etext);
   }
 );
@@ -173,22 +138,20 @@ test(
 
     axios.put.mockRejectedValue("Test Error");
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
-    
+
     expect(mockErrorText.mock.calls[0][0]).toBe(etext);
   }
 );
 
 test(
-  filename + " startGame sets page on role distribution success",
+  filename + " startGame calls setLoadingStart on role distribution success",
   async () => {
-    const mockPage = jest.fn((text) => (text))
-    const dumbFunc = jest.fn(() =>(''))
-    const pagetext = "Role";
+    const mockLoading = jest.fn((text) => (text))
 
     axios.put.mockResolvedValue({
       response: {
@@ -196,12 +159,135 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setPage={mockPage} resetRole={dumbFunc} players={[]} room={{}} errortext={""}/>);
+    const wrapper = shallow(<Lobby setLoadingStart={mockLoading} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
-    
-    expect(mockPage.mock.calls[0][0]).toBe(pagetext);
+
+    // verifies setLoadingStart was called with no parameter
+    expect(mockLoading.mock.calls[0][0]).toBe(undefined);
+  }
+);
+
+// ------------------
+// gameChangeHandler
+// ------------------
+
+test(
+  filename + " gameChangeHandler sets errortext on game change failure due to selected game not having a corresponding object in database",
+  async () => {
+    const mockErrorText = jest.fn((text) => (text))
+    const etext = "Game with the selected title has not been created; please select a different game.";
+
+    axios.put.mockRejectedValue({
+      response: {
+        status: 404
+      }
+    });
+
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
+    const instance = wrapper.instance();
+
+    const changeEvent = { target: { name: "Test Game", value: "Test Game" } };
+    await instance.gameChangeHandler(changeEvent);
+    await instance.gameChangeHandler(changeEvent);
+
+    // only one call made to mocked function and it will have our data
+    expect(mockErrorText.mock.calls[0][0]).toBe(etext);
+  }
+);
+
+test(
+  filename + " gameChangeHandler sets errortext on game change failure due to Internal Server Error",
+  async () => {
+    const mockErrorText = jest.fn((text) => (text))
+    const etext = "Internal Server Error.";
+
+    axios.put.mockRejectedValue("Test Error");
+
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
+    const instance = wrapper.instance();
+
+    const changeEvent = { target: { name: "Test Game", value: "Test Game" } };
+    await instance.gameChangeHandler(changeEvent);
+    await instance.gameChangeHandler(changeEvent);
+
+    expect(mockErrorText.mock.calls[0][0]).toBe(etext);
+  }
+);
+
+test(
+  filename + " gameChangeHandler sets game on game selection success",
+  async () => {
+    const mockGame = jest.fn((text) => (text))
+    const game = {
+      title: "Test Game",
+      description: "Test Desc",
+      distributionRules: null,
+      roles: []
+    }
+
+    axios.put.mockResolvedValue({
+      status: 200,
+      data: game
+    });
+
+    const wrapper = shallow(<Lobby setGame={mockGame} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
+    const instance = wrapper.instance();
+
+    const changeEvent = { target: { name: "Test Game", value: "Test Game" } };
+    await instance.gameChangeHandler(changeEvent);
+    await instance.gameChangeHandler(changeEvent);
+
+    expect(mockGame.mock.calls[0][0]).toBe(game);
+  }
+);
+
+/**************
+ * RENDERING
+ *************/
+
+test(filename + " Renders loading screen on loading state", () => {
+  const pList = [{ user: "Hi", key: "121312312" }];
+  const wrapper = shallow(
+    <Lobby
+      hostName={""}
+      roomName={""}
+      players={pList}
+      errortext={""}
+      loading={true}
+    />
+  );
+  const instance = wrapper.instance();
+
+  const result = instance.render();
+
+  expect(result.type).toBe("div");
+  expect(result.props.children).toContainEqual(
+    <LoadingScreen text="Loading..." />
+  );
+});
+
+test(
+  filename + " Doesen't render loading screen on not loading state", () => {
+    const pList = [{ user: "Hi", key: "121312312" }];
+    const wrapper = shallow(
+      <Lobby
+        hostName={""}
+        roomName={""}
+        players={pList}
+        errortext={""}
+        loading={false}
+      />
+    );
+    const instance = wrapper.instance();
+
+    const result = instance.render();
+
+    expect(result.type).toBe("div");
+    expect(result.props.children).not.toContainEqual(
+      <LoadingScreen text="Loading..." />
+    );
   }
 );

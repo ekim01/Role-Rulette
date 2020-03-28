@@ -10,6 +10,7 @@ import { create } from "react-test-renderer";
 import Role from "../components/Role";
 import Home from "../components/Home";
 import Lobby from "../components/Lobby";
+import EndScreen from "../components/EndScreen";
 import App from "../App";
 
 enzyme.configure({ adapter: new Adapter() });
@@ -26,6 +27,14 @@ test(filename + " user state initializes to null", () => {
 test(filename + " roleName initializes to null", () => {
   const wrapper = shallow(<App />);
   expect(wrapper.state("roleName")).toBe("");
+});
+test(filename + " roleDesc initializes to null", () => {
+  const wrapper = shallow(<App />);
+  expect(wrapper.state("roleDesc")).toBe("");
+});
+test(filename + " goalDesc initializes to null", () => {
+  const wrapper = shallow(<App />);
+  expect(wrapper.state("goalDesc")).toBe("");
 });
 test(filename + " players state initializes to null", () => {
   const wrapper = shallow(<App />);
@@ -65,7 +74,9 @@ test(filename + " updates state", () => {
   const instance = wrapper.instance();
 
   const newPlayer = "Player1";
-  const newRole = "Role 1";
+  const newRoleName = "Role 1";
+  const newRoleDesc = "Role 1 Desc";
+  const newGoalDesc = "Role 1 Goal Desc";
   const newPlayers = ["Player 1", "Player 2", "Player 3"];
   const newRoom = "ABCD";
   const ahostName = "ABCDEFG";
@@ -73,7 +84,9 @@ test(filename + " updates state", () => {
   const newPage = "Lobby";
 
   instance.setState({ user: newPlayer });
-  instance.setState({ role: newRole });
+  instance.setState({ roleName: newRoleName });
+  instance.setState({ roleDesc: newRoleDesc });
+  instance.setState({ goalDesc: newGoalDesc });
   instance.setState({ players: newPlayers });
   instance.setState({ roomName: newRoom });
   instance.setState({ hostName: ahostName });
@@ -83,7 +96,9 @@ test(filename + " updates state", () => {
   instance.setState({ page: newPage });
 
   expect(wrapper.state("user")).toBe(newPlayer);
-  expect(wrapper.state("role")).toBe(newRole);
+  expect(wrapper.state("roleName")).toBe(newRoleName);
+  expect(wrapper.state("roleDesc")).toBe(newRoleDesc);
+  expect(wrapper.state("goalDesc")).toBe(newGoalDesc);
   expect(wrapper.state("players")).toBe(newPlayers);
   expect(wrapper.state("roomName")).toBe(newRoom);
   expect(wrapper.state("hostName")).toBe(ahostName);
@@ -100,7 +115,7 @@ test(filename + " updates state", () => {
 describe(filename + " Home component", () => {
   test("Matches the snapshot", () => {
     const home = create(
-      <Home joinRoom={() => {}} createRoom={() => {}} errortext={""} />
+      <Home joinRoom={() => { }} createRoom={() => { }} errortext={""} />
     );
     expect(home.toJSON()).toMatchSnapshot();
   });
@@ -108,7 +123,9 @@ describe(filename + " Home component", () => {
 
 describe(filename + " Role component", () => {
   test("Matches the snapshot", () => {
-    const home = create(<Role />);
+    const home = create(
+      <Role errortext={""} setLoadingFinish={() => { }} />
+    );
     expect(home.toJSON()).toMatchSnapshot();
   });
 });
@@ -123,7 +140,17 @@ describe(filename + " Lobby component", () => {
   });
 });
 
-describe(filename + " Renders Home component on Home page state", () => {
+describe(filename + " EndScreen component", () => {
+  const pList = [{ user: "Hi", key: "121312312" }];
+  test("Matches the snapshot", () => {
+    const home = create(
+      <EndScreen players={pList} errortext={""} />
+    );
+    expect(home.toJSON()).toMatchSnapshot();
+  });
+});
+
+test(filename + " Renders Home component on Home page state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
@@ -135,7 +162,7 @@ describe(filename + " Renders Home component on Home page state", () => {
   expect(result.props.children.type).toBe(Home);
 });
 
-describe(filename + " Renders Lobby component on Lobby page state", () => {
+test(filename + " Renders Lobby component on Lobby page state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
@@ -147,7 +174,7 @@ describe(filename + " Renders Lobby component on Lobby page state", () => {
   expect(result.props.children.type).toBe(Lobby);
 });
 
-describe(filename + " Renders Role component on Role page state", () => {
+test(filename + " Renders Role component on Role page state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
@@ -159,7 +186,19 @@ describe(filename + " Renders Role component on Role page state", () => {
   expect(result.props.children.type).toBe(Role);
 });
 
-describe(filename + " Renders error message on no page state", () => {
+test(filename + " Renders EndScreen component on EndScreen page state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ page: "EndScreen" });
+
+  const result = instance.render();
+
+  expect(result.type).toBe("div");
+  expect(result.props.children.type).toBe(EndScreen);
+});
+
+test(filename + " Renders error message on no page state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
@@ -175,28 +214,66 @@ describe(filename + " Renders error message on no page state", () => {
  * FUNCTIONS
  ********************/
 
-test(filename + "setLoadingState sets errortext state to empty", () => {
+test(filename + " setLoadingStart sets errortext state to empty", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
   const newText = "Error text";
   instance.setState({ errortext: newText });
-  instance.setLoadingState();
+  instance.setLoadingStart();
   expect(wrapper.state("errortext").length).toBe(0);
 });
 
-test(filename + "setLoadingState sets loading state to true", () => {
+test(filename + " setLoadingStart sets loading state to true", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
   instance.setState({ loading: false });
-  instance.setLoadingState();
+  instance.setLoadingStart();
   expect(wrapper.state("loading")).toEqual(true);
+});
+
+test(filename + " setLoadingFinish sets loading state to false", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ loading: true });
+  instance.setLoadingFinish();
+  expect(wrapper.state("loading")).toEqual(false);
+});
+
+test(filename + " setErrorText sets errortext state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  const text = "Error text";
+  instance.setState({ errortext: text });
+  instance.setErrorText("New Error Text");
+  expect(wrapper.state("errortext")).toEqual("New Error Text");
+});
+
+test(filename + " setPage sets page state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ page: "Home" });
+  instance.setPage("Lobby");
+  expect(wrapper.state("page")).toEqual("Lobby");
+});
+
+test(filename + " setGame sets nested game object in room state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  const text = "Error text";
+  instance.setState({ room: { game: null } });
+  instance.setGame({});
+  expect(wrapper.state("room")).toEqual({ game: {} });
 });
 
 test(
   filename +
-    "on joining, when username and roomname empty, errortext is /'Please complete all fields/'",
+  " on joining, when username and roomname empty, errortext is /'Please complete all fields/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -210,7 +287,7 @@ test(
 
 test(
   filename +
-    "on joining, when username empty, errortext is /'Please enter a name/'",
+  " on joining, when username empty, errortext is /'Please enter a name/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -224,7 +301,7 @@ test(
 
 test(
   filename +
-    "on joining, when username has only spaces, errortext is /'The name can't be only spaces/'",
+  " on joining, when username has only spaces, errortext is /'The name can't be only spaces/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -238,7 +315,7 @@ test(
 
 test(
   filename +
-    "on joining, when roomname empty, errortext is /'Please complete all fields/'",
+  " on joining, when roomname empty, errortext is /'Please complete all fields/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -252,7 +329,7 @@ test(
 
 test(
   filename +
-    "on joining, when roomname not 4 characters, errortext is /'Invalid room code/'",
+  " on joining, when roomname not 4 characters, errortext is /'Invalid room code/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -266,7 +343,7 @@ test(
 
 test(
   filename +
-    "on createroom, when username empty, errortext is /'Please enter a name/'",
+  " on createroom, when username empty, errortext is /'Please enter a name/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -279,7 +356,7 @@ test(
 
 test(
   filename +
-    "on createroom, when username has only spaces, errortext is /'The name can't be only spaces/'",
+  " on createroom, when username has only spaces, errortext is /'The name can't be only spaces/'",
   () => {
     const wrapper = shallow(<App />);
     const instance = wrapper.instance();
@@ -295,23 +372,23 @@ test(
  ******************/
 
 test(filename + " joinRoom is passed to Home component", () => {
-  const mockJoin = jest.fn(() => {});
-  const wrapper = shallow(<Home joinRoom={mockJoin} createRoom={() => {}} />);
+  const mockJoin = jest.fn(() => { });
+  const wrapper = shallow(<Home joinRoom={mockJoin} createRoom={() => { }} />);
   const instance = wrapper.instance();
   instance.props.joinRoom();
   expect(mockJoin).toBeCalledTimes(1);
 });
 
 test(filename + " createRoom is passed to Home component", () => {
-  const mockCreate = jest.fn(() => {});
-  const wrapper = shallow(<Home createRoom={mockCreate} joinRoom={() => {}} />);
+  const mockCreate = jest.fn(() => { });
+  const wrapper = shallow(<Home createRoom={mockCreate} joinRoom={() => { }} />);
   const instance = wrapper.instance();
   instance.props.createRoom();
   expect(mockCreate).toBeCalledTimes(1);
 });
 
 test(filename + " errortext is passed to Home component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const text = "error";
 
   const wrapper = shallow(<App />);
@@ -330,7 +407,7 @@ test(filename + " errortext is passed to Home component", () => {
 });
 
 test(filename + " loading is passed to Home component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
   instance.setState({ loading: true });
@@ -347,7 +424,7 @@ test(filename + " loading is passed to Home component", () => {
 });
 
 test(filename + " errortext is passed to Lobby component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const text = "error";
 
   const wrapper = shallow(<App />);
@@ -362,7 +439,7 @@ test(filename + " errortext is passed to Lobby component", () => {
 });
 
 test(filename + " hostName is passed to Lobby component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const name = "P1";
 
   const wrapper = shallow(<App />);
@@ -377,7 +454,7 @@ test(filename + " hostName is passed to Lobby component", () => {
 });
 
 test(filename + " roomName is passed to Lobby component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const room = "1234";
 
   const wrapper = shallow(<App />);
@@ -392,7 +469,7 @@ test(filename + " roomName is passed to Lobby component", () => {
 });
 
 test(filename + " Players is passed to Lobby component", () => {
-  const emptyFunc = () => {};
+  const emptyFunc = () => { };
   const ps = [{ name: "P1" }, { name: "P2" }];
 
   const wrapper = shallow(<App />);
@@ -575,7 +652,7 @@ test(filename + " pollRoom sets state on success", async () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();
 
-  await instance.pollRoom();  
+  await instance.pollRoom();
 
   expect(wrapper.state("room")).toEqual(froom);
   expect(wrapper.state("players")).toBe(fplayers);

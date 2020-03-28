@@ -9,3 +9,14 @@
 .btn {
   margin-bottom: 10px;
 }
+
+input.lobby_input{
+  width: 120px;
+  margin-left: 0px;
+}
+
+textarea.description {
+  vertical-align: top;
+  margin-bottom: 10px;
+  width: 450px;
+}

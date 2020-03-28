@@ -10,7 +10,6 @@ export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
       roomname: "",
       username: ""
     };
@@ -25,15 +24,12 @@ export default class Home extends Component {
 
   playernameHandler = event => {
     this.changeHandler(event);
-    //this is left here for if we want to add functionality to the name
   };
 
   roomnameHandler = event => {
     event.target.value = event.target.value.toUpperCase();
     this.changeHandler(event);
   };
-
-  // Sends a post request w/ username to /rooms/add then navigates to lobby page
 
   render() {
     return (
@@ -49,7 +45,6 @@ export default class Home extends Component {
               <label
                 for="username"
                 className="col-sm-4 col-form-label"
-                onChange={this.changeHandler}
               >
                 Enter a name:
               </label>
@@ -70,7 +65,6 @@ export default class Home extends Component {
               <label
                 for="roomname"
                 className="col-sm-4 col-form-label"
-                onChange={this.changeHandle}
               >
                 Enter room code:
               </label>

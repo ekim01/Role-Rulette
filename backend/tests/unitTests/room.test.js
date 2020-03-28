@@ -40,7 +40,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Test Game",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -84,7 +84,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Test Game",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -121,7 +121,7 @@ describe('Unit tests for rooms route', () => {
     const game = {
       title: "Test Game",
       description: "Game Description",
-      distributionRules: false,
+      distributionRules: null,
       roles: [{
         _id: "507f191e810c19729de860eb",
         name: "Test Role",
@@ -186,7 +186,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Test Game",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -233,6 +233,63 @@ describe('Unit tests for rooms route', () => {
     });
   });
 
+  test('PUT updating game should return new game after it is set', () => {
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Test Game",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    const newGame = {
+      title: "Test Game 2",
+      description: "Game Description",
+      distributionRules: null,
+      roles: [{
+        _id: "507f191e810c19729de860eb",
+        name: "Test Role",
+        roleDescription: "Role Description",
+        goalDescription: "Goal Description"
+      }]
+    }
+    mockingoose(Game).toReturn(newGame, 'findOne');
+    return request(app).put('/rooms/updateGame').send({ room: room, gameTitle: "Test Game 2" }).expect(200).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toMatchObject(newGame);
+    });
+  });
+
+  test('PUT updating game with a gameTitle that does not have an associated game object should return error', () => {
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Test Game",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    mockingoose(Game).toReturn(null, 'findOne');
+    return request(app).put('/rooms/updateGame').send({ room: room, gameTitle: "Test Game 2" }).expect(404).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('No game with selected title found');
+    });
+  });
+
   // Testing Role Distribution cases
   test('PUT role distribution with no game provided should return error', () => {
     const room = {
@@ -256,7 +313,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Test Game",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -280,7 +337,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Spyfall",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -358,7 +415,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Spyfall",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Test Role",
@@ -400,7 +457,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Spyfall",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [],
         locations: null
       }
@@ -438,7 +495,7 @@ describe('Unit tests for rooms route', () => {
       game: {
         title: "Spyfall",
         description: "Game Description",
-        distributionRules: false,
+        distributionRules: null,
         roles: [{
           _id: "507f191e810c19729de860eb",
           name: "Pilot",
@@ -459,6 +516,633 @@ describe('Unit tests for rooms route', () => {
     mockingoose(Player).toReturn({}, 'update');
     return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(200).expect('Content-Type', /json/).then(response => {
       expect(response.body).toBe('Role Distribution Successful');
+    });
+  });
+
+  test('PUT Avalon role distribution without minimum amount of players should return error', () => {
+    // used for mocking game populate
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Avalon",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(418).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Require more players to start game');
+    });
+  });
+
+  test('PUT Avalon role distribution with over maximum amount of players should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ef",
+        name: "Test User6",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e1",
+        name: "Test User7",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e2",
+        name: "Test User8",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e3",
+        name: "Test User9",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e4",
+        name: "Test User10",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e5",
+        name: "Test User11",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Avalon",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(418).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Maximum amount of players surpassed');
+    });
+  });
+
+  test('PUT Avalon role distribution without distributionRules should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Avalon",
+        description: "Game Description",
+        distributionRules: null,
+        roles: []
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(404).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Distribution Rules list not found');
+    });
+  });
+
+  test('PUT Avalon role distribution without distribution rules for the current number of players should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Avalon",
+        description: "Game Description",
+        distributionRules: [{
+          playerNum: 6,
+          good: 4,
+          evil: 2
+        }],
+        roles: []
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(404).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Distribution Rules for current number of players not found');
+    });
+  });
+
+  test('PUT Avalon role distribution works as intended with correct number of players', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Avalon",
+        description: "Game Description",
+        distributionRules: [{
+          playerNum: 5,
+          good: 3,
+          evil: 2
+        }],
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Merlin",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        },
+        {
+          _id: "507f191e810c19729de860ec",
+          name: "Loyal Servant of Arthur",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        },
+        {
+          _id: "507f191e810c19729de860ed",
+          name: "Assassin",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        },
+        {
+          _id: "507f191e810c19729de860ee",
+          name: "Minion of Mordred",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    mockingoose(Player).toReturn({}, 'update');
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(200).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Role Distribution Successful');
+    });
+  });
+
+  test('PUT Secret Dictator role distribution without minimum amount of players should return error', () => {
+    // used for mocking game populate
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Secret Dictator",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(418).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Require more players to start game');
+    });
+  });
+
+  test('PUT Secret Dictator role distribution with over maximum amount of players should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ef",
+        name: "Test User6",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e1",
+        name: "Test User7",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e2",
+        name: "Test User8",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e3",
+        name: "Test User9",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e4",
+        name: "Test User10",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860e5",
+        name: "Test User11",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Secret Dictator",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(418).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Maximum amount of players surpassed');
+    });
+  });
+
+  test('PUT Secret Dictator role distribution without distributionRules should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Secret Dictator",
+        description: "Game Description",
+        distributionRules: null,
+        roles: []
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(404).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Distribution Rules list not found');
+    });
+  });
+
+  test('PUT Secret Dictator role distribution without distribution rules for the current number of players should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Secret Dictator",
+        description: "Game Description",
+        distributionRules: [{
+          playerNum: 6,
+          liberal: 4,
+          fascist: 2
+        }],
+        roles: []
+      }
+    }
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(404).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Distribution Rules for current number of players not found');
+    });
+  });
+
+  test('PUT Secret Dictator role distribution works as intended with correct number of players', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User1",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860eb",
+        name: "Test User2",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ec",
+        name: "Test User3",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ed",
+        name: "Test User4",
+        host: true,
+        role: null
+      },
+      {
+        _id: "507f191e810c19729de860ee",
+        name: "Test User5",
+        host: true,
+        role: null
+      }],
+      game: {
+        title: "Secret Dictator",
+        description: "Game Description",
+        distributionRules: [{
+          playerNum: 5,
+          fascist: 3,
+          liberal: 2
+        }],
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Dictator",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        },
+        {
+          _id: "507f191e810c19729de860ec",
+          name: "Fascist",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        },
+        {
+          _id: "507f191e810c19729de860ed",
+          name: "Liberal",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    mockingoose(Player).toReturn({}, 'update');
+    return request(app).put('/rooms/distributeRoles').send({ room: room }).expect(200).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Role Distribution Successful');
+    });
+  });
+
+  test('PUT EndScreen should update gameInProgress successfully', () => {
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Test Game",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    mockingoose(Room).toReturn({}, 'update');
+    return request(app).put('/rooms/EndScreen').send({ room: room }).expect(200).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe("Game ended successfully.");
+    });
+  });
+
+  test('PUT EndScreen should fail to update gameInProgress', () => {
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [],
+      game: {
+        title: "Test Game",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    const error = new Error("Test Error");
+    mockingoose(Room).toReturn(error, 'update');
+    return request(app).put('/rooms/EndScreen').send({ room: room }).expect(400).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Error: ' + error);
     });
   });
 });
