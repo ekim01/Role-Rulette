@@ -208,6 +208,36 @@ describe('Unit tests for rooms route', () => {
     });
   });
 
+  test('POST adding player to room with duplicate name should return error', () => {
+    // used for mocking players and game populate
+    Room.schema.path('players', [Object]);
+    Room.schema.path('game', Object);
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [{
+        _id: "507f191e810c19729de860ea",
+        name: "Test User",
+        host: true,
+        role: {
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }
+      }],
+      game: null
+    }
+    const error = new Error("Name already in use.");
+    mockingoose(Room).toReturn(room, 'findOne');
+    mockingoose(Player).toReturn({}, 'save');
+    mockingoose(Room).toReturn(error, 'update');
+
+    return request(app).post('/rooms/addPlayer').send({ username: "Test User", roomname: "AAAA" }).expect(418).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe("Name already in use.");
+    });
+  });
+
   test('POST adding player to room should return error', () => {
     // used for mocking players and game populate
     Room.schema.path('players', [Object]);

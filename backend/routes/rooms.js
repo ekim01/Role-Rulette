@@ -111,41 +111,57 @@ router.route("/addPlayer").post((req, res, next) => {
     return res.send("Username exceeds max length.");
   }
 
-  Room.findOne({ roomCode: req.body.roomname })
+  Room.findOne({ roomCode: req.body.roomname }).populate("players")
     .then(room => {
       if (room) {
-        // If room exists, add player to room
 
-        const newPlayer = new Player({
-          name: username,
-          host: false,
-          role: null
-        });
-
-        newPlayer
-          .save()
-          .then(() => console.log("Player added"))
-          .catch(err => {
-            console.log("Player failed to add");
-            next(err);
-          });
-        // Add player to room
-        Room.update(
-          { _id: room._id },
-          {
-            $push: {
-              players: newPlayer
-            }
+        let allPlayers = room.players;
+        let usernameInUse = false;
+        for(let i = 0; i<allPlayers.length; i++)
+        {
+          let currPlayer = allPlayers[i];
+          if((currPlayer.name).localeCompare(username) === 0) {
+            usernameInUse = true;
+            i = allPlayers.length;
           }
-        )
-          .then(() => res.json(newPlayer))
-          .catch(err => next(err));
+        }
 
-        console.log(
-          "Added player %s to room %s",
-          req.body.username,
-          req.body.roomname
-        );
+        if(!usernameInUse) {
+
+          const newPlayer = new Player({
+            name: username,
+            host: false,
+            role: null
+          });
+
+          newPlayer
+            .save()
+            .then(() => console.log("Player added"))
+            .catch(err => {
+              console.log("Player failed to add");
+              next(err);
+            });
+          // Add player to room
+          Room.update(
+            { _id: room._id },
+            {
+              $push: {
+                players: newPlayer
+              }
+            }
+          )
+            .then(() => res.json(newPlayer))
+            .catch(err => next(err));
+
+          console.log(
+            "Added player %s to room %s",
+            req.body.username,
+            req.body.roomname
+          );
+        } else {
+          return res.status(418).json('Name already in use.');
+        }
+
       } else {
         console.log("Room %s not found", req.body.roomname);
         return res.status(404).json('Room code not found.');

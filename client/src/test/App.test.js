@@ -540,6 +540,25 @@ test(filename + " joinRoom sets errortext on room not found", async () => {
   expect(wrapper.state("loading")).toBe(false);
 });
 
+test(filename + " joinRoom sets errortext on joining room with duplicate name", async () => {
+  const etext = "Name already in use.";
+
+  axios.post.mockRejectedValue({
+    response: {
+      status: 418
+    }
+  });
+
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  await instance.joinRoom("1234", "Player 1");
+  await instance.joinRoom("1234", "Player 1");
+
+  expect(wrapper.state("errortext")).toBe(etext);
+  expect(wrapper.state("loading")).toBe(false);
+});
+
 test(
   filename + " joinRoom sets errortext on room join failed with response",
   async () => {

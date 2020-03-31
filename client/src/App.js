@@ -159,6 +159,10 @@ export default class App extends Component {
             this.setState({
               errortext: "Room not found."
             });
+          } else if (error.response.status === 418)  {
+            this.setState({
+              errortext: "Name already in use."
+            });
           } else {
             this.setState({
               errortext: "Error joining room; please try again."
