@@ -13,8 +13,6 @@ export default class Role extends Component {
   componentDidMount() {
     // checks the current room state every 3 seconds
     this.timer = setInterval(() => this.pollRoom(), POLLING_TIME);
-    // set loading to false when role page is correctly rendered
-    this.props.setLoadingFinish()
   }
 
   componentWillUnmount() {
@@ -57,8 +55,6 @@ export default class Role extends Component {
     }
     return (
       <div>
-        {/* If roleName hasn't been set it means that host just distributed roles and the role is loading */}
-        {(this.props.loading || !this.props.roleName) && <LoadingScreen text="Loading..." />}
         <h1 id="gameTitle" className="text-center"> Current Game: {gameTitle}</h1>
         <div className="container-fluid">
           <div className="row">

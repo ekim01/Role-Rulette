@@ -21,19 +21,22 @@ export default class Lobby extends Component {
   }
 
   pollRoom = () => {
-    this.props.pollRoom().then(() => {
-      // role set, game has started, go to role page
-      if (this.props.user.role && this.props.room.gameInProgress) {
-        this.props.setPage("Role")
-      }
-    });
+    if(!this.props.loading)
+    {
+      this.props.pollRoom().then(() => {
+        if (this.props.user.role && this.props.room.gameInProgress) {
+          this.props.setPage("Role")
+        }
+      });
+    }
   }
 
   startGame = () => {
     let vm = this
+    vm.props.setLoadingStart()
     axios.put('/rooms/distributeRoles', { room: this.props.room }).then(function (response) {
-      // load until game is started and polling sets page to Role
-      vm.props.setLoadingStart()
+      vm.props.setLoadingFinish()
+      vm.pollRoom()
     }).catch(function (error) {
       if (error.response) {
         if (error.response.status === 400) {
