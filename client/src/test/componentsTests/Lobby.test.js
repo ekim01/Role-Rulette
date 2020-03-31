@@ -75,7 +75,7 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
@@ -98,7 +98,7 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
@@ -120,7 +120,7 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
@@ -138,7 +138,7 @@ test(
 
     axios.put.mockRejectedValue("Test Error");
 
-    const wrapper = shallow(<Lobby setErrorText={mockErrorText} players={[]} room={{}} errortext={""} />);
+    const wrapper = shallow(<Lobby setErrorText={mockErrorText} setLoadingStart={() => { }} setLoadingFinish={() => { }} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
@@ -149,9 +149,9 @@ test(
 );
 
 test(
-  filename + " startGame calls setLoadingStart on role distribution success",
+  filename + " startGame calls pollRoom on role distribution success",
   async () => {
-    const mockLoading = jest.fn((text) => (text))
+    const mockPoll = jest.fn((text) => (text))
 
     axios.put.mockResolvedValue({
       response: {
@@ -159,14 +159,14 @@ test(
       }
     });
 
-    const wrapper = shallow(<Lobby setLoadingStart={mockLoading} players={[]} room={{}} errortext={""} />);
+    const wrapper = shallow(<Lobby pollRoom={mockPoll} setLoadingStart={() => { }} setLoadingFinish={() => { }} loading={false} players={[]} room={{}} errortext={""} />);
     const instance = wrapper.instance();
 
     await instance.startGame();
     await instance.startGame();
 
     // verifies setLoadingStart was called with no parameter
-    expect(mockLoading.mock.calls[0][0]).toBe(undefined);
+    expect(mockPoll.mock.calls[0][0]).toBe(undefined);
   }
 );
 

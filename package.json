@@ -9,7 +9,7 @@
     "client-build": "cd client && npm run-script build",
     "build": "npm run-script client-build",
     "client-test": "cd client && npm run-script test a",
-    "client-test-ci": "cd client && npm run-script test -- a --coverage --updateSnapshot --CI=true",
+    "client-test-ci": "cd client && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
     "server-test": "cd backend && npm run-script test",
     "test": "npm run-script server-test && npm run-script client-test ",
     "test-ci": "npm run-script server-test && npm run-script client-test-ci",

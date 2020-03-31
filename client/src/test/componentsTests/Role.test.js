@@ -16,13 +16,13 @@ jest.mock("axios");
 
 test(filename + " invokes componentDidMount when mounted", () => {
   const mount = jest.spyOn(Role.prototype, "componentDidMount");
-  shallow(<Role setLoadingFinish={() => { }} />);
+  shallow(<Role/>);
   expect(mount).toHaveBeenCalled();
 });
 
 test(filename + " invokes componentWillUnmount", () => {
   const mount = jest.spyOn(Role.prototype, "componentWillUnmount");
-  const wrapper = shallow(<Role setLoadingFinish={() => { }} />);
+  const wrapper = shallow(<Role/>);
   wrapper.unmount();
   expect(mount).toHaveBeenCalled();
 });
@@ -30,7 +30,7 @@ test(filename + " invokes componentWillUnmount", () => {
 test(filename + " pollRoom function call from componentDidMount", () => {
   jest.useFakeTimers();
   const mockPoll = jest.fn(() => { });
-  const wrapper = shallow(<Role setLoadingFinish={() => { }} pollRoom={mockPoll} />);
+  const wrapper = shallow(<Role pollRoom={mockPoll} />);
   const instance = wrapper.instance();
   instance.pollRoom = mockPoll;
   jest.advanceTimersByTime(6000);
@@ -44,7 +44,7 @@ test(filename + " pollRoom function call from componentDidMount", () => {
 test(filename + " setInterval() should be called on componentDidMount", () => {
   jest.useFakeTimers();
   const mockPoll = jest.fn(() => { });
-  const wrapper = shallow(<Role setLoadingFinish={() => { }} pollRoom={mockPoll} />);
+  const wrapper = shallow(<Role pollRoom={mockPoll} />);
   const instance = wrapper.instance();
   instance.pollRoom = mockPoll;
   jest.runOnlyPendingTimers();
@@ -53,7 +53,7 @@ test(filename + " setInterval() should be called on componentDidMount", () => {
 
 test(filename + " clearInterval() should be called on componentWillUnmount", () => {
   jest.useFakeTimers();
-  const wrapper = shallow(<Role setLoadingFinish={() => { }} />);
+  const wrapper = shallow(<Role />);
   wrapper.unmount();
   expect(clearInterval).toHaveBeenCalled();
 });
@@ -65,8 +65,6 @@ test(filename + " clearInterval() should be called on componentWillUnmount", () 
 test(filename + " Renders loading screen on loading state", () => {
   const wrapper = shallow(
     <Role
-      setLoadingFinish={() => { }}
-      roleName={""}
       errortext={""}
       loading={true}
     />
@@ -85,8 +83,6 @@ test(
   filename + " Doesen't render loading screen on not loading state", () => {
     const wrapper = shallow(
       <Role
-        setLoadingFinish={() => { }}
-        roleName={"Test"}
         errortext={""}
         loading={false}
       />

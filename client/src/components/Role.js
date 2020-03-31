@@ -33,7 +33,7 @@ export default class Role extends Component {
     axios.put('/rooms/EndScreen', { room: this.props.room }).then(function (response) {
       vm.props.setPage("EndScreen")
     }).catch(function (error) {
-        vm.props.setErrorText("Internal Server Error.")
+      vm.props.setErrorText("Internal Server Error.")
       console.log(error);
     });
   }
@@ -55,6 +55,7 @@ export default class Role extends Component {
     }
     return (
       <div>
+        {this.props.loading && <LoadingScreen text="Loading..." />}
         <h1 id="gameTitle" className="text-center"> Current Game: {gameTitle}</h1>
         <div className="container-fluid">
           <div className="row">
@@ -85,21 +86,21 @@ export default class Role extends Component {
               <div>
                 <textarea className="description" id="goalDescription" readOnly value={this.props.goalDesc} />
               </div>
-            {/* Hides start game button for all players except host */}
-            {
-              (host) ?
-                <React.Fragment>
-                  <button
-                        type="submit"
-                        className="btn btn-lg btn-block"
-                        onClick={this.endGame}
-                      >
-                        End Game
+              {/* Hides start game button for all players except host */}
+              {
+                (host) ?
+                  <React.Fragment>
+                    <button
+                      type="submit"
+                      className="btn btn-lg btn-block"
+                      onClick={this.endGame}
+                    >
+                      End Game
                 </button>
-                </React.Fragment>
-                : null
-            }
-            </div>            
+                  </React.Fragment>
+                  : null
+              }
+            </div>
           </div>
         </div>
       </div>

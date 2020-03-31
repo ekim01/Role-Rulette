@@ -258,7 +258,6 @@ export default class App extends Component {
           roleName={this.state.roleName}
           roleDesc={this.state.roleDesc}
           goalDesc={this.state.goalDesc}
-          setLoadingFinish={this.setLoadingFinish}
         />
       );
     } else if (this.state.page === "EndScreen") {
