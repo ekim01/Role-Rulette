@@ -117,16 +117,15 @@ router.route("/addPlayer").post((req, res, next) => {
 
         let allPlayers = room.players;
         let usernameInUse = false;
-        for(let i = 0; i<allPlayers.length; i++)
-        {
+        for (let i = 0; i < allPlayers.length; i++) {
           let currPlayer = allPlayers[i];
-          if((currPlayer.name).localeCompare(username) === 0) {
+          if ((currPlayer.name).localeCompare(username) === 0) {
             usernameInUse = true;
             i = allPlayers.length;
           }
         }
 
-        if(!usernameInUse) {
+        if (!usernameInUse) {
 
           const newPlayer = new Player({
             name: username,
@@ -231,6 +230,52 @@ router.route("/distributeRoles").put((req, res) => {
   } else {
     return res.status(400).json('No game selected');
   }
+});
+
+//finds user in room and deletes them.
+router.route("/leaveLobby").put((req, res) => {
+  let currRoom = req.body.room
+  let currUser = req.body.user
+
+  Room.findById({ _id: currRoom._id }).then((r) => {
+    playerList = r.players;
+
+    for (i = 0; i < playerList.length; i++) {
+      Player.findById({ _id: playerList[i] }).then((u) => {
+        //found player in room
+        if (u.name == currUser) {
+          Room.findByIdAndUpdate({ _id: r._id }, { $pull: { players: u._id } }, () => {
+            console.log("Removed: " + currUser + " from lobby: "+r.roomCode);
+          });
+
+          //if user is the host and there are >1 players, next player will be host
+          if (u.host && playerList.length > 1) {
+            Player.findByIdAndUpdate({ _id: playerList[1] }, { host: true }, (er, updated) => {
+              if (er)
+                console.log(er);
+              else {
+                //send the found host back to be updated
+                console.log("Assigned new host: " + updated.name);
+                res.json(updated.name);
+              }
+            });
+          } else if (playerList.length == 1) {
+            //delete room since last person is leaving
+            Room.findByIdAndDelete({ _id: r._id }, () => {
+              console.log("Removed room: " + r.roomCode);
+            });
+            res.sendStatus(200);
+          }
+          //remove the user from the player database
+          Player.findByIdAndDelete({ _id: u._id }, () => {
+            console.log("User deleted: " + currUser);
+          });
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+    }
+  });
 });
 
 spyfallDistribution = (room, res) => {

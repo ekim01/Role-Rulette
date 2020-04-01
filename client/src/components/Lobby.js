@@ -24,8 +24,16 @@ export default class Lobby extends Component {
     if(!this.props.loading)
     {
       this.props.pollRoom().then(() => {
-        if (this.props.user.role && this.props.room.gameInProgress) {
-          this.props.setPage("Role")
+        // If the user doesn't exist anymore go home otherwise, role set, game has started, go to role page
+        if(this.props.user)
+        {
+          if (this.props.user.role && this.props.room.gameInProgress) {
+            this.props.setPage("Role")
+          }
+        }
+        else
+        {
+          this.props.setPage("Home")
         }
       });
     }
@@ -71,6 +79,18 @@ export default class Lobby extends Component {
       console.log(error);
     });
     console.log(event.target.value)
+  }
+
+  leaveLobby = () => {
+    let vm = this
+    axios.put("/rooms/leaveLobby", {room : this.props.room, user : this.props.user.name}).then(function (response) {
+      if(response.status == 200){
+        vm.props.setPage("Home");
+      }
+      vm.pollRoom()
+      }).catch(function(error) {
+        console.log(error);
+      });
   }
 
 

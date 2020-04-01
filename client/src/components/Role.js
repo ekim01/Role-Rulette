@@ -89,18 +89,18 @@ export default class Role extends Component {
               {/* Hides start game button for all players except host */}
               {
                 (host) ?
-                  <React.Fragment>
-                    <button
-                      type="submit"
-                      className="btn btn-lg btn-block"
-                      onClick={this.endGame}
-                    >
-                      End Game
+                <React.Fragment>
+                  <button
+                        type="submit"
+                        className="btn btn-lg btn-block"
+                        onClick={this.endGame}
+                      >
+                        End Game
                 </button>
-                  </React.Fragment>
-                  : null
-              }
-            </div>
+                </React.Fragment>
+                : null
+            }
+            </div>            
           </div>
         </div>
       </div>

@@ -39,6 +39,12 @@ export default class App extends Component {
     return errorMessage;
   }
 
+  setHostName = (newHost) => {
+    this.setState({
+      hostName: newHost
+    });
+  };
+
   setLoadingStart = () => {
     this.setState({
       loading: true,
@@ -83,8 +89,8 @@ export default class App extends Component {
         this.setState({
           room: response.data,
           players: response.data.players,
-          user: response.data.players.find(player => player._id === this.state.user._id)
-
+          user: response.data.players.find(player => player._id === this.state.user._id),
+          hostName: response.data.players[0].name
         });
         if (this.state.user && this.state.user.role) {
           this.setState({
@@ -224,6 +230,7 @@ export default class App extends Component {
           createRoom={this.createRoom}
           errortext={this.state.errortext}
           loading={this.state.loading}
+          setLoadingFinish={this.setLoadingFinish}
         />
       );
     } else if (this.state.page === "Lobby") {
