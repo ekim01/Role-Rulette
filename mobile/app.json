@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Role-Roulette",
+    "slug": "mobile",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": ["android"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "package": "com.comp4350.role_roulette",
+      "versionCode": 1
+    },
+    "web": {
+      "build": {
+        "babel": {
+          "include": ["native-base", "static-container"]
+        }
+      }
+    }
+  }
+}

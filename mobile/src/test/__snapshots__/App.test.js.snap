@@ -1,0 +1,1229 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.js  Home component Matches the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#eee",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#383b53",
+        "color": "white",
+        "flexDirection": "column",
+        "marginBottom": 0,
+        "padding": 50,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#ad343e",
+          "fontSize": 40,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      ROLE ROULETTE
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+        }
+      }
+    >
+      Hidden Identity Games Made Easier
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 13,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 0,
+      }
+    }
+  >
+    <Text>
+      Choose your player name:
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 13,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      maxLength={15}
+      onChangeText={[Function]}
+      placeholder="Player"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "#555",
+          "borderColor": "#888",
+          "borderWidth": 1,
+          "color": "#eee",
+          "paddingHorizontal": 10,
+          "width": 375,
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 13,
+      }
+    }
+  />
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 0,
+      }
+    }
+  >
+    <Text>
+      Enter Room Code:
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 13,
+      }
+    }
+  >
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="characters"
+      maxLength={4}
+      onChangeText={[Function]}
+      onKeyPress={[Function]}
+      placeholder="XXXX"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "#555",
+          "borderColor": "#888",
+          "borderWidth": 1,
+          "color": "#eee",
+          "marginRight": 20,
+          "paddingHorizontal": 10,
+          "textTransform": "uppercase",
+        }
+      }
+      underlineColorAndroid="transparent"
+      value=""
+    />
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Join Room
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 0,
+      }
+    }
+  >
+    <Text>
+      — OR —
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "alignSelf": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 13,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityStates={Array []}
+      accessible={true}
+      focusable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Array [
+            Object {},
+          ]
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#007AFF",
+                "fontSize": 18,
+                "padding": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Create Room
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`App.js  Lobby component Matches the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#eee",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "margin": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <Text>
+        Room Code:
+      </Text>
+      <Text
+        style={
+          Object {
+            "backgroundColor": "#555",
+            "color": "#eee",
+            "marginLeft": 10,
+            "paddingHorizontal": 10,
+            "textTransform": "uppercase",
+          }
+        }
+      >
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={false}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Leave
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          Object {
+            "marginLeft": 10,
+          }
+        }
+      />
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Start
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#ccc",
+          "borderRadius": 15,
+          "marginVertical": 10,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <View
+          animated={true}
+          defaultIndex={-1}
+          defaultValue=""
+          disabled={false}
+          dropdownStyle={
+            Object {
+              "color": "#eee",
+              "width": "80%",
+            }
+          }
+          dropdownTextStyle={
+            Object {
+              "fontSize": 15,
+              "margin": 10,
+            }
+          }
+          keyboardShouldPersistTaps="never"
+          onSelect={[Function]}
+          options={
+            Array [
+              "Spyfall",
+              "Avalon",
+              "Secret Dictator",
+            ]
+          }
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={true}
+          style={
+            Object {
+              "backgroundColor": "#555",
+              "borderColor": "#888",
+              "borderWidth": 1,
+              "color": "#eee",
+              "width": "100%",
+            }
+          }
+          textStyle={
+            Object {
+              "color": "white",
+              "fontSize": 20,
+              "margin": 10,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            focusable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "justifyContent": "center",
+                }
+              }
+            >
+              <Text
+                numberOfLines={1}
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 12,
+                    },
+                    Object {
+                      "color": "white",
+                      "fontSize": 20,
+                      "margin": 10,
+                    },
+                  ]
+                }
+              >
+                
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <View
+          accessibilityRole="button"
+          accessibilityStates={Array []}
+          accessible={true}
+          focusable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {},
+              ]
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#007AFF",
+                    "fontSize": 18,
+                    "padding": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Game Description
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "fontSize": 16,
+              "padding": 5,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "fontSize": 16,
+                "fontWeight": "bold",
+                "padding": 5,
+              }
+            }
+          >
+             Players: 
+          </Text>
+            - 
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <Text>
+        The Host is: 
+        
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ccc",
+            "borderColor": "#444",
+            "borderWidth": 2,
+            "padding": 3,
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontStyle": "italic",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Player List
+        </Text>
+        <RCTScrollView
+          data={
+            Array [
+              Object {
+                "key": "121312312",
+                "user": "Hi",
+              },
+            ]
+          }
+          disableVirtualization={false}
+          getItem={[Function]}
+          getItemCount={[Function]}
+          horizontal={false}
+          initialNumToRender={10}
+          keyExtractor={[Function]}
+          maxToRenderPerBatch={10}
+          numColumns={1}
+          onContentSizeChange={[Function]}
+          onEndReachedThreshold={2}
+          onLayout={[Function]}
+          onMomentumScrollEnd={[Function]}
+          onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onScrollEndDrag={[Function]}
+          removeClippedSubviews={false}
+          renderItem={[Function]}
+          scrollEventThrottle={50}
+          stickyHeaderIndices={Array []}
+          updateCellsBatchingPeriod={50}
+          viewabilityConfigCallbackPairs={Array []}
+          windowSize={21}
+        >
+          <View>
+            <View
+              onLayout={[Function]}
+              style={null}
+            >
+              <Text
+                style={
+                  Object {
+                    "borderColor": "#aaa",
+                    "borderTopWidth": 2,
+                    "marginTop": 2,
+                    "paddingTop": 2,
+                  }
+                }
+              />
+            </View>
+          </View>
+        </RCTScrollView>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`App.js  Role component Matches the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#eee",
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "margin": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginVertical": 5,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ddd",
+            "borderColor": "#444",
+            "borderWidth": 2,
+            "marginTop": 20,
+            "padding": 5,
+          }
+        }
+      >
+        <Text>
+          Room Code:
+           
+          <Text
+            style={
+              Object {
+                "color": "#000",
+                "fontWeight": "bold",
+                "marginLeft": 10,
+                "paddingHorizontal": 10,
+                "textTransform": "uppercase",
+              }
+            }
+          />
+        </Text>
+      </View>
+    </View>
+    <Text
+      style={
+        Object {
+          "color": "#383b53",
+          "fontSize": 35,
+          "fontStyle": "italic",
+          "fontWeight": "bold",
+          "margin": 5,
+        }
+      }
+    >
+      
+    </Text>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#ccc",
+          "borderRadius": 15,
+          "marginVertical": 10,
+          "paddingBottom": 10,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "backgroundColor": "#444",
+            "borderTopLeftRadius": 15,
+            "borderTopRightRadius": 15,
+            "color": "#eee",
+            "fontSize": 16,
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+            "paddingHorizontal": 20,
+            "paddingVertical": 3,
+          }
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 20,
+              "fontWeight": "bold",
+              "marginTop": 10,
+              "paddingHorizontal": 5,
+            }
+          }
+        >
+          Your Role: 
+          <Text
+            style={
+              Object {
+                "color": "#a00",
+              }
+            }
+          >
+            
+          </Text>
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "padding": 5,
+            }
+          }
+        >
+          Role Description: 
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "fontSize": 16,
+              "padding": 5,
+            }
+          }
+        >
+          
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginVertical": 3,
+            "paddingHorizontal": 15,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "padding": 5,
+            }
+          }
+        >
+          Goal: 
+        </Text>
+        <Text
+          style={
+            Object {
+              "backgroundColor": "#eee",
+              "borderRadius": 5,
+              "fontSize": 16,
+              "padding": 5,
+            }
+          }
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "marginVertical": 5,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={false}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Leave
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#fff",
+      "flex": 1,
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "backgroundColor": "#eee",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#383b53",
+          "color": "white",
+          "flexDirection": "column",
+          "marginBottom": 0,
+          "padding": 50,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#ad343e",
+            "fontSize": 40,
+            "fontWeight": "bold",
+          }
+        }
+      >
+        ROLE ROULETTE
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#fff",
+            "fontSize": 16,
+          }
+        }
+      >
+        Hidden Identity Games Made Easier
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 13,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 0,
+        }
+      }
+    >
+      <Text>
+        Choose your player name:
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 13,
+        }
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        maxLength={15}
+        onChangeText={[Function]}
+        placeholder="Player"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "backgroundColor": "#555",
+            "borderColor": "#888",
+            "borderWidth": 1,
+            "color": "#eee",
+            "paddingHorizontal": 10,
+            "width": 375,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 13,
+        }
+      }
+    />
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 0,
+        }
+      }
+    >
+      <Text>
+        Enter Room Code:
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 13,
+        }
+      }
+    >
+      <TextInput
+        allowFontScaling={true}
+        autoCapitalize="characters"
+        maxLength={4}
+        onChangeText={[Function]}
+        onKeyPress={[Function]}
+        placeholder="XXXX"
+        rejectResponderTermination={true}
+        style={
+          Object {
+            "backgroundColor": "#555",
+            "borderColor": "#888",
+            "borderWidth": 1,
+            "color": "#eee",
+            "marginRight": 20,
+            "paddingHorizontal": 10,
+            "textTransform": "uppercase",
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Join Room
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 0,
+        }
+      }
+    >
+      <Text>
+        — OR —
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 13,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Create Room
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -6,15 +6,20 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "cd backend && npm start",
-    "client-build": "cd client && npm run-script build",
+    "client-build": "cd client && CI=false npm run-script build",
     "build": "npm run-script client-build",
     "client-test": "cd client && npm run-script test a",
     "client-test-ci": "cd client && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
     "server-test": "cd backend && npm run-script test",
-    "test": "npm run-script server-test && npm run-script client-test ",
+    "test": "npm run-script server-test && npm run-script client-test && npm run-script mobile-test ",
     "test-ci": "npm run-script server-test && npm run-script client-test-ci",
     "start": "npm run-script build && npm run-script server",
-    "postinstall": "cd client && npm install && cd ../backend && npm install"
+    "postinstall": "cd client && npm install && cd ../backend && npm install",
+    "mobile": "cd mobile && npm start",
+    "mobile-install": "cd mobile && npm install",
+    "mobile-test": "cd mobile && npm run-script test",
+    "mobile-test-ci": "cd mobile && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
+    "build-mobile": "cd mobile && run-script build-web"
   },
   "repository": {
     "type": "git",
@@ -25,5 +30,9 @@
   "bugs": {
     "url": "https://github.com/chadxhillary/Role-Roulette/issues"
   },
-  "homepage": "https://github.com/chadxhillary/Role-Roulette#readme"
+  "homepage": "https://github.com/chadxhillary/Role-Roulette#readme",
+  "dependencies": {
+    "react-native": "^0.61.5",
+    "react-native-cli": "^2.0.1"
+  }
 }

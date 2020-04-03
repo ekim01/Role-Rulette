@@ -216,7 +216,7 @@ router.route("/EndScreen").put((req, res) => {
 
 // Role distribution route that directs to different methods to handle different game distributions
 router.route("/distributeRoles").put((req, res) => {
-  let room = req.body.room
+  let room = req.body.room;
   if (room.game) {
     if (room.game.title == "Spyfall") {
       return spyfallDistribution(room, res)
@@ -225,10 +225,12 @@ router.route("/distributeRoles").put((req, res) => {
     } else if (room.game.title == "Secret Dictator") {
       return secretDictatorDistribution(room, res)
     } else {
-      return res.status(404).json('Selected game does not have role distribution rules');
+      return res
+        .status(404)
+        .json("Selected game does not have role distribution rules");
     }
   } else {
-    return res.status(400).json('No game selected');
+    return res.status(400).json("No game selected");
   }
 });
 

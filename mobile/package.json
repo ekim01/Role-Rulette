@@ -1,0 +1,51 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "start-web": "react-scripts start",
+    "build-web": "react-scripts build",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "expo": "~36.0.0",
+    "react": "~16.13.1",
+    "react-art": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
+    "react-native-modal-dropdown": "^0.7.0",
+    "react-native-popup-dialog": "^0.18.3",
+    "react-router-dom": "^5.1.2",
+    "react-router-native": "^5.1.2",
+    "react-scripts": "^3.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@expo/webpack-config": "^0.11.9",
+    "babel-preset-expo": "~8.0.0",
+    "electron": "^8.2.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest-expo": "^36.0.1",
+    "react-native-web": "^0.12.2",
+    "react-test-renderer": "^16.13.1",
+    "webpack-merge": "^4.2.2"
+  },
+  "private": true,
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

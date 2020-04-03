@@ -2,7 +2,7 @@
 
 An application that assigns and distributes identities / roles to a group of players participating in a physical or analog secret-role based game.
 
-[Project Proposal](/PROPOSAL.md)
+[Project Proposal](docs/PROPOSAL.md)
 
 COMP 4350 Group Project — Winter 2020
 
@@ -12,26 +12,27 @@ COMP 4350 Group Project — Winter 2020
 
 ## Table Of Contents
 
-  * [Production Server](#production-server)
-  * [Project Tracking](#project-tracking)
-  * [Tech Stack](#tech-stack)
-  * [Architecture and User Flow](#architecture-and-user-flow)
-    + [Data Model Diagram](#data-model-diagram)
-    + [User Experience Architecture / Flow Diagram](#user-experience-architecture---flow-diagram)
-  * [Setting up your dev environment](#setting-up-your-dev-environment)
-  * [Running the application locally](#running-the-application-locally)
-  * [Continuous Integration](#continuous-integration)
-  * [API Documentation](#api-documentation)
-  * [Testing](#testing)
-  * [Linter](#linter)
-- [Programming Guidelines and Review Process](#programming-guidelines-and-review-process)
-  * [Programming  Guidelines](#programming--guidelines)
-  * [Github Workflow](#github-workflow)
-    + [Branching](#branching)
-    + [Pull Requests](#pull-requests)
-    + [Merging Pull Requests](#merging-pull-requests)
-  * [Review Process](#review-process)
-  * [Review Checklist](#review-checklist)
+- [Production Server](#production-server)
+- [Project Tracking](#project-tracking)
+- [Tech Stack](#tech-stack)
+- [Architecture and User Flow](#architecture-and-user-flow)
+  - [Data Model Diagram](#data-model-diagram)
+  - [User Experience Architecture / Flow Diagram](#user-experience-architecture---flow-diagram)
+- [Setting up your dev environment](#setting-up-your-dev-environment)
+- [Running the application locally](#running-the-application-locally)
+- [Continuous Integration](#continuous-integration)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Linter](#linter)
+
+* [Programming Guidelines and Review Process](#programming-guidelines-and-review-process)
+  - [Programming Guidelines](#programming--guidelines)
+  - [Github Workflow](#github-workflow)
+    - [Branching](#branching)
+    - [Pull Requests](#pull-requests)
+    - [Merging Pull Requests](#merging-pull-requests)
+  - [Review Process](#review-process)
+  - [Review Checklist](#review-checklist)
 
 ---
 
@@ -53,14 +54,14 @@ To access the production version of our application please visit: [http://ec2-3-
 
 ## Tech Stack
 
-* **Production Server**: AWS EC2
-* **Web Application**: MERN stack
-  * **Persistence:** MongoDB
-  * **API:** Express JS
-  * **Server Application**: Node JS
-  * **Client Application:** React JS
-* **Mobile Application**
-  * React Native
+- **Production Server**: AWS EC2
+- **Web Application**: MERN stack
+  - **Persistence:** MongoDB
+  - **API:** Express JS
+  - **Server Application**: Node JS
+  - **Client Application:** React JS
+- **Mobile Application**
+  - React Native
 
 <br />
 
@@ -68,11 +69,11 @@ To access the production version of our application please visit: [http://ec2-3-
 
 ### Data Model Diagram
 
-![data-model-diagram](/data-model-diagram.PNG)
+![data-model-diagram](docs/data-model-diagram.PNG)
 
 ### User Experience Architecture / Flow Diagram
 
-![ux-flow](/ux-flow.png)
+![ux-flow](docs/ux-flow.png)
 
 ---
 
@@ -86,7 +87,7 @@ First, ensure you have Node.js and npm installed on your machine. You can check 
 
 [Follow the guide here to install Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-### 2. Cloning  the Repo
+### 2. Cloning the Repo
 
 Install git, or GitHub desktop on your machine if you haven't already, and clone the repo. For instructions, see the guide [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository)
 
@@ -94,7 +95,7 @@ Install git, or GitHub desktop on your machine if you haven't already, and clone
 
 Open your terminal to the root folder (this folder) of the repository, and enter `npm install` to acquire all the project's dependencies.
 
-**Troubleshooting:** If the install failed, try entering the same command, `npm install` within both the `/backend` and `/client` repositories. 
+**Troubleshooting:** If the install failed, try entering the same command, `npm install` within both the `/backend` and `/client` repositories.
 
 <br />
 
@@ -132,7 +133,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 `.github/workflows/nodejs.yml`
 
-This Continuous integration action script will run checks on any active pull request to ensure that the application installs correctly, builds without error, passes all tests, and runs without error. Pull requests that do not pass one of these checks will not be able to be merged. 
+This Continuous integration action script will run checks on any active pull request to ensure that the application installs correctly, builds without error, passes all tests, and runs without error. Pull requests that do not pass one of these checks will not be able to be merged.
 
 This is a safeguard to ensure our `develop` and `master` branches are always in working order.
 
@@ -142,8 +143,8 @@ This is a safeguard to ensure our `develop` and `master` branches are always in 
 
 `TODO`. For now;
 
-* See `/backend/models` for schema models.
-* See `/backend/routes` for the API methods, and the `const` variables in each route for the request arguments
+- See `/backend/models` for schema models.
+- See `/backend/routes` for the API methods, and the `const` variables in each route for the request arguments
 
 <br />
 
@@ -151,7 +152,7 @@ This is a safeguard to ensure our `develop` and `master` branches are always in 
 
 ### `npm test`
 
-Runs all test suites in both client and backend packages.<br />See `README.md` in both the `/client` and `/backend` directories for testing each package individually.
+Runs all test suites in client, backend, and mobile packages.<br />See `README.md` in the `/client`, `/backend`, and `/mobile` directories for testing each package individually.
 
 **JEST** is our testing framework. See the JEST documentation on getting started [here](https://jestjs.io/docs/en/getting-started.html).
 
@@ -165,7 +166,7 @@ The client tests are located at `/client/test`, and the server tests are located
 
 **ESLint** is our linting framework. The configuration file can be found at `/.eslintrc`.
 
-**To Run ESLint**, run `eslint "**.js" ` from within the directory your files are in. Or run `eslint myfile.js` to run the linter on your file.
+**To Run ESLint**, run `eslint "**.js"` from within the directory your files are in. Or run `eslint myfile.js` to run the linter on your file.
 
 See ESLint documentation [here](https://eslint.org/docs/user-guide/getting-started) for more details.
 
@@ -183,7 +184,7 @@ If you're using Visual Studio Code as your coding environment, you can install t
 
 <br />
 
-## Programming  Guidelines
+## Programming Guidelines
 
 **General**
 
@@ -255,10 +256,10 @@ If you're using Visual Studio Code as your coding environment, you can install t
 - Link to the Tello item is given in the PR description, along with a very brief overall summary
 - Passes all task-specific acceptance criteria listed in the Trello item
   - (Everything outlined in the task/story description is either finished, or an explanation why it wasn’t implemented is provided)
-- The app can be run, the changes can be observed in-app (if applicable) 
+- The app can be run, the changes can be observed in-app (if applicable)
 - **Code meets all programming practices above**
 - Code passes linter
 - Must have thorough enough testing (~70% Coverage)
   - The code is written to be testable (ex. you can use dependency injection)
-  - Edge cases are tested. 
+  - Edge cases are tested.
 - Passes all GitHub CI checks
