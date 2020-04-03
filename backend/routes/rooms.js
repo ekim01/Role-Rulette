@@ -241,7 +241,6 @@ router.route("/leaveLobby").put((req, res) => {
 
   Room.findById({ _id: currRoom._id }).then((r) => {
     playerList = r.players;
-
     for (i = 0; i < playerList.length; i++) {
       Player.findById({ _id: playerList[i] }).then((u) => {
         //found player in room
@@ -258,7 +257,6 @@ router.route("/leaveLobby").put((req, res) => {
               else {
                 //send the found host back to be updated
                 console.log("Assigned new host: " + updated.name);
-                res.json(updated.name);
               }
             });
           } else if (playerList.length == 1) {
@@ -266,7 +264,6 @@ router.route("/leaveLobby").put((req, res) => {
             Room.findByIdAndDelete({ _id: r._id }, () => {
               console.log("Removed room: " + r.roomCode);
             });
-            res.sendStatus(200);
           }
           //remove the user from the player database
           Player.findByIdAndDelete({ _id: u._id }, () => {
@@ -277,6 +274,7 @@ router.route("/leaveLobby").put((req, res) => {
         console.log(err);
       });
     }
+    return res.json("Leave Lobby Complete")
   });
 });
 

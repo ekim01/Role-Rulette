@@ -320,6 +320,36 @@ describe('Unit tests for rooms route', () => {
     });
   });
 
+  test('PUT leaving lobby should run to completion', () => {
+    const player = {
+      _id: "507f191e810c19729de860ea",
+      name: "Test User1",
+      host: true,
+      role: null
+    }
+    const room = {
+      _id: "507f191e810c19729de860ec",
+      roomCode: "AAAA",
+      players: [player],
+      game: {
+        title: "Test Game",
+        description: "Game Description",
+        distributionRules: null,
+        roles: [{
+          _id: "507f191e810c19729de860eb",
+          name: "Test Role",
+          roleDescription: "Role Description",
+          goalDescription: "Goal Description"
+        }]
+      }
+    }
+    mockingoose(Room).toReturn(room, 'findOne');
+    mockingoose(Player).toReturn(player, 'findOne');
+    return request(app).put('/rooms/leaveLobby').send({ room: room, user: "Test User1" }).expect(200).expect('Content-Type', /json/).then(response => {
+      expect(response.body).toBe('Leave Lobby Complete');
+    });
+  });
+
   // Testing Role Distribution cases
   test('PUT role distribution with no game provided should return error', () => {
     const room = {

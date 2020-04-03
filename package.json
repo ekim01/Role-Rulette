@@ -6,8 +6,10 @@
   "scripts": {
     "client": "cd client && npm start",
     "server": "cd backend && npm start",
-    "client-build": "cd client && CI=false npm run-script build",
+    "client-build": "cd client && npm run-script build",
+    "client-build-ci": "cd client && CI=false npm run-script build",
     "build": "npm run-script client-build",
+    "build-ci": "npm run-script client-build-ci",
     "client-test": "cd client && npm run-script test a",
     "client-test-ci": "cd client && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
     "server-test": "cd backend && npm run-script test",

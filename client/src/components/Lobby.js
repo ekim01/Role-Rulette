@@ -21,18 +21,15 @@ export default class Lobby extends Component {
   }
 
   pollRoom = () => {
-    if(!this.props.loading)
-    {
+    if (!this.props.loading) {
       this.props.pollRoom().then(() => {
         // If the user doesn't exist anymore go home otherwise, role set, game has started, go to role page
-        if(this.props.user)
-        {
+        if (this.props.user) {
           if (this.props.user.role && this.props.room.gameInProgress) {
             this.props.setPage("Role")
           }
         }
-        else
-        {
+        else {
           this.props.setPage("Home")
         }
       });
@@ -46,6 +43,7 @@ export default class Lobby extends Component {
       vm.props.setLoadingFinish()
       vm.pollRoom()
     }).catch(function (error) {
+      vm.props.setLoadingFinish()
       if (error.response) {
         if (error.response.status === 400) {
           vm.props.setErrorText("No game selected; please select a game.")
@@ -83,14 +81,14 @@ export default class Lobby extends Component {
 
   leaveLobby = () => {
     let vm = this
-    axios.put("/rooms/leaveLobby", {room : this.props.room, user : this.props.user.name}).then(function (response) {
-      if(response.status == 200){
+    axios.put("/rooms/leaveLobby", { room: this.props.room, user: this.props.user.name }).then(function (response) {
+      if (response.status == 200) {
         vm.props.setPage("Home");
       }
       vm.pollRoom()
-      }).catch(function(error) {
-        console.log(error);
-      });
+    }).catch(function (error) {
+      console.log(error);
+    });
   }
 
 

@@ -244,6 +244,49 @@ test(
   }
 );
 
+// ------------------
+// leaveLobby
+// ------------------
+
+test(
+  filename + " leaveLobby sets page to Home on leave success",
+  async () => {
+    const mockPage = jest.fn((text) => (text))
+
+    axios.put.mockResolvedValue({
+      status: 200
+    });
+
+    const wrapper = shallow(<Lobby setPage={mockPage} user={{}} players={[]} room={{}} errortext={""} />);
+    const instance = wrapper.instance();
+
+    await instance.leaveLobby();
+    await instance.leaveLobby();
+
+    expect(mockPage.mock.calls[0][0]).toBe("Home");
+  }
+);
+
+test(
+  filename + " leaveLobby does not set page on leave failure",
+  async () => {
+    const mockPage = jest.fn((text) => (text))
+
+    axios.put.mockResolvedValue({
+      status: 400
+    });
+
+    const wrapper = shallow(<Lobby setPage={mockPage} user={{}} players={[]} room={{}} errortext={""} />);
+    const instance = wrapper.instance();
+
+    await instance.leaveLobby();
+    await instance.leaveLobby();
+
+    // length of 0 means mock hasn't been called once and thus page is not set
+    expect(mockPage.mock.calls.length).toBe(0);
+  }
+);
+
 /**************
  * RENDERING
  *************/

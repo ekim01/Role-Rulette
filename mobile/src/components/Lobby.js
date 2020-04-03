@@ -155,6 +155,9 @@ class Lobby extends Component {
         vm.pollRoom();
       })
       .catch(function(error) {
+        vm.setState({
+          loading: false
+        });
         console.log(error);
       });
   };

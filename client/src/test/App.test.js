@@ -261,6 +261,15 @@ test(filename + " setPage sets page state", () => {
   expect(wrapper.state("page")).toEqual("Lobby");
 });
 
+test(filename + " setHostName sets hostName state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ hostName: "Host" });
+  instance.setHostName("newHost");
+  expect(wrapper.state("hostName")).toEqual("newHost");
+});
+
 test(filename + " setGame sets nested game object in room state", () => {
   const wrapper = shallow(<App />);
   const instance = wrapper.instance();

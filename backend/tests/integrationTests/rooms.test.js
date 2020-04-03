@@ -68,4 +68,30 @@ describe('Integration tests for rooms route', () => {
       });
     });
   })
+
+  test('PUT method should remove player from room', () => {
+    return request(app).post('/rooms/add').send({ username: "Test User" }).expect(200).expect('Content-Type', /json/).then(response => {
+      return request(app).post('/rooms/addPlayer').send({ username: "Test User 2", roomname: response.body.roomCode }).expect(200).expect('Content-Type', /json/).then(res => {
+        return request(app).put('/rooms/leaveLobby').send({ room: response.body, user: "Test User 2" }).expect(200).expect('Content-Type', /json/).then(res2 => {
+          return request(app).get('/rooms/getByRoomCode').query({ roomname: response.body.roomCode }).expect('Content-Type', /json/).then(res3 => {
+            // player that was added should have been removed
+            expect(res3.body.players.length).toEqual(1);
+          });
+        });
+      });
+    });
+  })
+
+  test('PUT method should not remove player from room', () => {
+    return request(app).post('/rooms/add').send({ username: "Test User" }).expect(200).expect('Content-Type', /json/).then(response => {
+      return request(app).post('/rooms/addPlayer').send({ username: "Test User 2", roomname: response.body.roomCode }).expect(200).expect('Content-Type', /json/).then(res => {
+        return request(app).put('/rooms/leaveLobby').send({ room: response.body, user: "Test User Not 2" }).expect(200).expect('Content-Type', /json/).then(res2 => {
+          return request(app).get('/rooms/getByRoomCode').query({ roomname: response.body.roomCode }).expect('Content-Type', /json/).then(res3 => {
+            // player that was added should not have been removed
+            expect(res3.body.players.length).toEqual(2);
+          });
+        });
+      });
+    });
+  })
 })
