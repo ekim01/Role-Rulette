@@ -42,6 +42,16 @@ Launches the test runner (Jest) in the interactive watch mode.<br />
 Creates Xcode and Android Studio projects for your app. Use this if you need to add custom native functionality. Learn more here [Ejecting to Bare Workflow](https://docs.expo.io/versions/v36.0.0/workflow/customizing/) <br />
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run acceptanceTests`
+
+The acceptance tests are not run with `npm test` and are run separately instead. Acceptance tests were developed using [Appium](http://appium.io/). As such, there are a few [prerequesites](http://appium.io/docs/en/about-appium/getting-started/) needed before running this command. In summary, you will need to:
+ * have set up `JAVA_HOME` and `ANDROID_HOME` PATH environment variables
+ * downloaded the .apk and changed the app field in the acceptance test files
+ * start up an Android emulator or connect a real device
+ * start the Appium server
+ * then finally run this command
+
+Another option would be to navigate to the acceptanceTests directory and running each file separately. For example `node chooseGame.js`.
 ## Changing Target Server
 
 The default target server is our production server at http://ec2-3-16-156-190.us-east-2.compute.amazonaws.com/. If you would like to test functionality or features that the target server has yet to implement, please run your own server and change TARGET_URL. <br />
