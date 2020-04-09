@@ -10,7 +10,7 @@
     "client-build-ci": "cd client && CI=false npm run-script build",
     "build": "npm run-script client-build",
     "build-ci": "npm run-script client-build-ci",
-    "client-test": "cd client && npm run-script test a",
+    "client-test": "cd client && npm run-script test a && npm run-script cucumberTests",
     "client-test-ci": "cd client && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
     "server-test": "cd backend && npm run-script test",
     "test": "npm run-script server-test && npm run-script client-test && npm run-script mobile-test ",
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/chadxhillary/Role-Roulette#readme",
   "dependencies": {
-    "react-native": "^0.61.5",
+    "react-native": "^0.62.1",
     "react-native-cli": "^2.0.1"
   }
 }
