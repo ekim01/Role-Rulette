@@ -164,7 +164,6 @@ export default class App extends React.Component {
                     setPage={this.setPage}
                     pollRoom={this.pollRoom}
                     setGame={this.setGame}
-                    setErrorText={this.setErrorText}
                   />
                 )}
               />

@@ -1,7 +1,7 @@
 import React from "react";
 import renderer, { create } from "react-test-renderer";
 import { shallow } from "enzyme";
-import * as axios from "axios";
+import axios from "axios";
 import enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 
@@ -14,10 +14,9 @@ import EndScreen from "../components/EndScreen";
 /***************************
  * Setup
  ***************************/
-
 const filename = "App.js ";
 enzyme.configure({ adapter: new Adapter() });
-jest.mock("axios");
+
 
 const fakePoll = jest.fn().mockResolvedValue({ role: "123" });
 
@@ -136,20 +135,38 @@ test(filename + " updates state", () => {
 describe(filename + " Home component", () => {
   test("Matches the snapshot", () => {
     const home = create(
-      <Home joinRoom={() => {}} createRoom={() => {}} errortext={""} />
+      <Home setHomeName={() => {}} setPlayers={() => {}} setRole={() => {}} setRoomName={() => {}} 
+        setUser={() => {}} setPage={() => {}} setRoom={() => {}} />
     ).toJSON();
     expect(home).toMatchSnapshot();
   });
 });
 
 const fakeRoom = { game: { title: "" } };
-
+const fakeUser = { name: "test"}
 describe(filename + " Role component", () => {
+  const pList = [{ user: "Hi", key: "121312312" }];
   test("Matches the snapshot", () => {
-    const role = create(<Role pollRoom={fakePoll} room={fakeRoom} />).toJSON();
+    const role = create(
+      <Role 
+        hostName={""}
+        roomName={""}
+        players={pList}
+        room={fakeRoom}
+        user={fakeUser}
+        pollRoom={fakePoll}
+        setPage={() => {}}
+        setErrorText={() => {}}
+        roleName={""}
+        roleDesc={""}
+        goalDesc={""}
+      />
+      )
+      .toJSON();
     expect(role).toMatchSnapshot();
   });
 });
+
 
 describe(filename + " Lobby component", () => {
   const pList = [{ user: "Hi", key: "121312312" }];
@@ -160,12 +177,31 @@ describe(filename + " Lobby component", () => {
           hostName={""}
           roomName={""}
           players={pList}
-          errortext={""}
+          room={fakeRoom}
+          user={fakeUser}
           pollRoom={fakePoll}
+          setPage={() => {}}
+          setGame={() => {}}
+          setErrorText={() => {}}
         />
       )
       .toJSON();
     expect(lobby).toMatchSnapshot();
+  });
+});
+
+describe(filename + " EndScreen component", () => {
+  const pList = [{ name: "name", role: {name: "roleName"}}];
+  test("Matches the snapshot", () => {
+    const end = renderer
+      .create(
+        <EndScreen
+          players={pList}
+          setPage={() => {}}
+        />
+      )
+      .toJSON();
+    expect(end).toMatchSnapshot();
   });
 });
 
@@ -181,18 +217,141 @@ test(filename + " setGame sets room game", () => {
   expect(wrapper.state("room").game).toBe(fgame);
 });
 
+test(filename + " setRoom sets room state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  const froom = { a: "b" };
+  instance.setRoom(froom);
+  expect(wrapper.state("room")).toBe(froom);
+});
+
+test(filename + " setPage sets page state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ page: "Home" });
+  instance.setPage("Lobby");
+  expect(wrapper.state("page")).toEqual("Lobby");
+});
+
+test(filename + " setUser sets user state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  const fuser = { a: "b" };
+  instance.setUser(fuser);
+  expect(wrapper.state("user")).toBe(fuser);
+});
+
+const frole = { name: "name", roleDescription: "desc", goalDescription: "goal" };
+
+test(filename + " setRole sets roleName state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  instance.setState({roleName: "temp"});
+  instance.setRole(frole);
+  expect(wrapper.state("roleName")).toEqual("name");
+});
+
+test(filename + " setRole sets roleDesc state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  instance.setState({roleDesc: "temp"});
+  instance.setRole(frole);
+  expect(wrapper.state("roleDesc")).toEqual("desc");
+});
+
+test(filename + " setRole sets goalDesc state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  instance.setState({roleDesc: "temp"});
+  instance.setRole(frole);
+  expect(wrapper.state("goalDesc")).toEqual("goal");
+});
+
+test(filename + " setPlayers sets players state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+  const flist = ["one","two"];
+  instance.setState({players: ["temp","array"]});
+  instance.setPlayers(flist);
+  expect(wrapper.state("players")).toBe(flist);
+});
+
+test(filename + " setErrorText sets errortext state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  const text = "Error text";
+  instance.setState({ errortext: text });
+  instance.setErrorText("New Error Text");
+  expect(wrapper.state("errortext")).toEqual("New Error Text");
+});
+
+test(filename + " setHostName sets hostName state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ hostName: "Host" });
+  instance.setHostName("newHost");
+  expect(wrapper.state("hostName")).toEqual("newHost");
+});
+
+test(filename + " setRoomName sets roomName state", () => {
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  instance.setState({ roomName: "roomName" });
+  instance.setRoomName("newRoomName");
+  expect(wrapper.state("roomName")).toEqual("newRoomName");
+});
+
+test(filename + " pollRoom sets state on success", async () => {
+  const froomCode = "ABCD";
+  const fuser = "ME";
+  const fHost = "host1name";
+  const fplayers = [{ name: fHost }, { name: fuser }];
+  const froom = {
+    players: fplayers,
+    roomCode: froomCode,
+    user: {
+      name: fuser
+    }
+  };
+
+  axios.get.mockResolvedValue({
+    data: {
+      roomCode: froomCode,
+      players: fplayers,
+      user: {
+        name: fuser
+      }
+    }
+  });
+
+  const wrapper = shallow(<App />);
+  const instance = wrapper.instance();
+
+  await instance.pollRoom();
+
+  expect(wrapper.state("room")).toEqual(froom);
+  expect(wrapper.state("players")).toBe(fplayers);
+  expect(wrapper.state("user")).toEqual({ name: fHost });
+  expect(wrapper.state("hostName")).toEqual(fHost);
+
+});
+
 /******************
  * SUBCOMPONENTS
  ******************/
 
 // HOME
 
-test(filename + " createRoom is passed to Home component", () => {
-  const mockPage = jest.fn(() => {});
-  const wrapper = shallow(<Home createRoom={mockPage} />);
+test(filename + " setHostName is passed to Home component", () => {
+  const mocksetHost = jest.fn(() => {});
+  const wrapper = shallow(<Home setHostName={mocksetHost} />);
   const instance = wrapper.instance();
-  instance.props.createRoom();
-  expect(mockPage).toBeCalledTimes(1);
+  instance.props.setHostName();
+  expect(mocksetHost).toBeCalledTimes(1);
 });
 
 test(filename + " setPlayers is passed to Home component", () => {
@@ -476,40 +635,3 @@ test(filename + " setPage is passed to Endscreen component", () => {
   instance.props.setPage();
   expect(mocksetPage).toBeCalledTimes(1);
 });
-
-/*
-
-test(filename + " pollRoom sets state on success", async () => {
-  const froomCode = "ABCD";
-  const fuser = "ME";
-  const fHost = "host1name";
-  const fplayers = [{ name: fHost }, { name: fuser }];
-  const froom = {
-    players: fplayers,
-    roomCode: froomCode,
-    user: {
-      name: fuser
-    }
-  };
-
-  axios.get.mockResolvedValue({
-    data: {
-      roomCode: froomCode,
-      players: fplayers,
-      user: {
-        name: fuser
-      }
-    }
-  });
-
-  const wrapper = shallow(<App />);
-  const instance = wrapper.instance();
-
-  await instance.pollRoom();
-
-  expect(wrapper.state("room")).toEqual(froom);
-  expect(wrapper.state("players")).toBe(fplayers);
-  expect(wrapper.state("user")).toEqual({ name: fHost });
-});
-
-*/

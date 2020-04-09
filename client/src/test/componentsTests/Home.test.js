@@ -123,7 +123,7 @@ test(filename + " Renders loading screen on loading state", () => {
 });
 
 test(
-  filename + " Doesen't render loading screen on not loading state",
+  filename + " Doesn't render loading screen on not loading state",
   () => {
     const wrapper = shallow(
       <Home

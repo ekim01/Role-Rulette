@@ -1,5 +1,225 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`App.js  EndScreen component Matches the snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#eee",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#383b53",
+        "color": "white",
+        "flexDirection": "column",
+        "marginBottom": 0,
+        "padding": 50,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#ad343e",
+          "fontSize": 40,
+          "fontWeight": "bold",
+        }
+      }
+    >
+      ROLE ROULETTE
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#fff",
+          "fontSize": 16,
+        }
+      }
+    >
+      Hidden Identity Games Made Easier
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "margin": 15,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "color": "#383b53",
+            "fontSize": 35,
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+            "margin": 5,
+          }
+        }
+      >
+        Game over!
+      </Text>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "backgroundColor": "#ccc",
+            "borderColor": "#444",
+            "borderWidth": 2,
+            "padding": 3,
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "fontStyle": "italic",
+              "fontWeight": "bold",
+            }
+          }
+        >
+          Player List
+        </Text>
+        <RCTScrollView
+          data={
+            Array [
+              Object {
+                "name": "name",
+                "role": Object {
+                  "name": "roleName",
+                },
+              },
+            ]
+          }
+          disableVirtualization={false}
+          getItem={[Function]}
+          getItemCount={[Function]}
+          horizontal={false}
+          initialNumToRender={10}
+          keyExtractor={[Function]}
+          maxToRenderPerBatch={10}
+          numColumns={1}
+          onContentSizeChange={[Function]}
+          onEndReachedThreshold={2}
+          onLayout={[Function]}
+          onMomentumScrollEnd={[Function]}
+          onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onScrollEndDrag={[Function]}
+          removeClippedSubviews={false}
+          renderItem={[Function]}
+          scrollEventThrottle={50}
+          stickyHeaderIndices={Array []}
+          updateCellsBatchingPeriod={50}
+          viewabilityConfigCallbackPairs={Array []}
+          windowSize={21}
+        >
+          <View>
+            <View
+              onLayout={[Function]}
+              style={null}
+            >
+              <Text
+                style={
+                  Object {
+                    "borderColor": "#aaa",
+                    "borderTopWidth": 2,
+                    "marginTop": 2,
+                    "paddingTop": 2,
+                  }
+                }
+              >
+                name
+                 was the 
+                roleName
+              </Text>
+            </View>
+          </View>
+        </RCTScrollView>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignSelf": "center",
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+          "padding": 8,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityStates={Array []}
+        accessible={true}
+        focusable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {},
+            ]
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#007AFF",
+                  "fontSize": 18,
+                  "padding": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Back to Lobby
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`App.js  Home component Matches the snapshot 1`] = `
 <View
   style={
@@ -326,7 +546,7 @@ exports[`App.js  Lobby component Matches the snapshot 1`] = `
         accessibilityRole="button"
         accessibilityStates={Array []}
         accessible={true}
-        focusable={false}
+        focusable={true}
         isTVSelectable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -371,48 +591,6 @@ exports[`App.js  Lobby component Matches the snapshot 1`] = `
           }
         }
       />
-      <View
-        accessibilityRole="button"
-        accessibilityStates={Array []}
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {},
-            ]
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "fontSize": 18,
-                  "padding": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Start
-          </Text>
-        </View>
-      </View>
     </View>
     <View
       style={
@@ -436,7 +614,7 @@ exports[`App.js  Lobby component Matches the snapshot 1`] = `
           animated={true}
           defaultIndex={-1}
           defaultValue=""
-          disabled={false}
+          disabled={true}
           dropdownStyle={
             Object {
               "color": "#eee",
@@ -756,7 +934,9 @@ exports[`App.js  Role component Matches the snapshot 1`] = `
                 "textTransform": "uppercase",
               }
             }
-          />
+          >
+            
+          </Text>
         </Text>
       </View>
     </View>
@@ -798,7 +978,7 @@ exports[`App.js  Role component Matches the snapshot 1`] = `
           }
         }
       >
-        
+        test
       </Text>
       <View
         style={
@@ -901,50 +1081,7 @@ exports[`App.js  Role component Matches the snapshot 1`] = `
           "marginVertical": 5,
         }
       }
-    >
-      <View
-        accessibilityRole="button"
-        accessibilityStates={Array []}
-        accessible={true}
-        focusable={false}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {},
-            ]
-          }
-        >
-          <Text
-            style={
-              Array [
-                Object {
-                  "color": "#007AFF",
-                  "fontSize": 18,
-                  "padding": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Leave
-          </Text>
-        </View>
-      </View>
-    </View>
+    />
   </View>
 </View>
 `;

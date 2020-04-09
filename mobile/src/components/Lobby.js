@@ -121,12 +121,14 @@ class Lobby extends Component {
       .catch(function(error) {
         if (error.response) {
           if (error.response.status === 404) {
-            vm.props.setErrorText(
-              "Game with the selected title has not been created; please select a different game."
-            );
+            vm.setState({
+              errortext: "Game with the selected title has not been created; please select a different game."
+            });
           }
         } else {
-          vm.props.setErrorText("Internal Server Error.");
+          vm.setState({
+            errortext: "Internal Server Error."
+          });
         }
         vm.setState({
           loading: false

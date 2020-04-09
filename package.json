@@ -20,7 +20,7 @@
     "mobile": "cd mobile && npm start",
     "mobile-install": "cd mobile && npm install",
     "mobile-test": "cd mobile && npm run-script test",
-    "mobile-test-ci": "cd mobile && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot",
+    "mobile-test-ci": "cd mobile && CI=true npm run-script test -- --watchAll=false --coverage --updateSnapshot --forceExit",
     "build-mobile": "cd mobile && run-script build-web"
   },
   "repository": {

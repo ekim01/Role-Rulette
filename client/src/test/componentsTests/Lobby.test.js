@@ -165,7 +165,7 @@ test(
     await instance.startGame();
     await instance.startGame();
 
-    // verifies setLoadingStart was called with no parameter
+    // verifies pollRoom was called with no parameter
     expect(mockPoll.mock.calls[0][0]).toBe(undefined);
   }
 );
