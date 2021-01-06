@@ -12,7 +12,7 @@
     "acceptanceTests": "node ./src/test/acceptanceTests/chooseGame.js && node ./src/test/acceptanceTests/createRoom.js && node ./src/test/acceptanceTests/joinRoom.js && node ./src/test/acceptanceTests/leaveRoom.js && node ./src/test/acceptanceTests/viewInfo.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "expo": "~36.0.0",
     "react": "~16.13.1",
     "react-art": "^16.13.1",
