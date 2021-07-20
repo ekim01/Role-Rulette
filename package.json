@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/chadxhillary/Role-Roulette#readme",
   "dependencies": {
-    "react-native": "^0.62.1",
+    "react-native": "^0.62.3",
     "react-native-cli": "^2.0.1"
   }
 }
